@@ -1,4 +1,9 @@
 ulib
 ====
 
-uki's essential C++ library
+UKi's essential C++ library
+
+* CUString
+
+* CUTextFile
+
