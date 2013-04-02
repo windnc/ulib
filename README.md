@@ -2,10 +2,10 @@ ulib
 ====
 
 UKi's essential C++ library
-Since 2006.
+
+Developed and tested since 2006.
 
 * CUString
-
  * Very simiar to MFC's CString. Not all methods are supported, but still useful and efficient.
 
 * CStringList, CStringListRO
