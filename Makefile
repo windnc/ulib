@@ -5,7 +5,7 @@ PREFIX=`echo ~`/.lib/ulib
 OBJECTS  = src/ustring/ustring.o src/ustring/ustringlist.o src/ustring/ustringlistro.o
 OBJECTS += src/uadt/ustack.o src/uadt/ulist.o 
 OBJECTS += src/ufile/ufile.o src/ufile/udir.o src/ufile/utextfile.o 
-OBJECTS += src/ufile/uflistfile.o src/ufile/uconfigfile.o
+OBJECTS += src/ufile/uflistfile.o src/ufile/uconfigfile.o src/ufile/uindexfile.o
 OBJECTS += src/uutil/uprogress.o src/uutil/ucounter.o src/uutil/umath.o 
 OBJECTS += src/ufunc/ufunc.o 
 

@@ -8,6 +8,7 @@ all:
 	${CC} ${CFLAGS} -o ustringlistro_test ./ustringlistro_test.cpp -I../include ${OBJECT}
 	${CC} ${CFLAGS} -o uprogress_test ./uprogress_test.cpp -I../include ${OBJECT}
 	${CC} ${CFLAGS} -o umath_test ./umath_test.cpp -I../include ${OBJECT}
+	${CC} ${CFLAGS} -o uindexfile_test ./uindexfile_test.cpp -I../include ${OBJECT}
 #	${CC} ${CFLAGS} -o ustringmap_test ./ustringmap_test.cpp ustringmap.cpp -I../include ${OBJECT}
 #	${CC} ${CFLAGS} -o ustringvec_test ./ustringvec_test.cpp ustringvec.cpp -I../include ${OBJECT} 
 #	${CC} ${CFLAGS} -o ustringmatrix_test ./ustringmatrix_test.cpp ../ufile/utextfile.cpp ustringmatrix.cpp ustringlist.cpp ustringlistsn.cpp -I../include ${OBJECT} 
@@ -16,6 +17,6 @@ all:
 clean:
 	rm -rf ustring_test ustringlist_test ustringlistro_test
 	rm -rf uprogress_test
-	rm -rf umath_test
+	rm -rf umath_test uindexfile_test tiny.uidx-*
 
 # ㅁ
