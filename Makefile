@@ -11,7 +11,6 @@ OBJECTS += src/ufunc/ufunc.o
 
 INC = -Iinclude
 
-# ㅁ
 all:    ${OBJECTS} 
 	mkdir -p lib
 #	ar -rscv -o lib/ulib.a ${OBJECTS}
@@ -26,10 +25,7 @@ install:
 	rm -rf ${PREFIX}
 	mkdir ${PREFIX}
 	cp -R include ${PREFIX}
-	mv ${PREFIX}/include/ulib.h.org ${PREFIX}/include/ulib.h
 	cp -R lib ${PREFIX}
-	rm -rf ${PREFIX}/include/.svn
-	rm -rf ${PREFIX}/lib/.svn
 
 .cpp.o:
 	${CC} ${CFLAGS} -c $< -o $*.o ${INC}
@@ -41,3 +37,4 @@ clean:
 	rm -rf lib/ulib.a
 	rm -rf lib/ustring.a
 
+# ㅁ
