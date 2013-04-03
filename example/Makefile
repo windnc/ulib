@@ -9,6 +9,7 @@ all:
 	${CC} ${CFLAGS} -o uprogress_test ./uprogress_test.cpp -I../include ${OBJECT}
 	${CC} ${CFLAGS} -o umath_test ./umath_test.cpp -I../include ${OBJECT}
 	${CC} ${CFLAGS} -o uindexfile_test ./uindexfile_test.cpp -I../include ${OBJECT}
+	${CC} ${CFLAGS} -o uoption_test ./uoption_test.cpp -I../include ${OBJECT}
 #	${CC} ${CFLAGS} -o ustringmap_test ./ustringmap_test.cpp ustringmap.cpp -I../include ${OBJECT}
 #	${CC} ${CFLAGS} -o ustringvec_test ./ustringvec_test.cpp ustringvec.cpp -I../include ${OBJECT} 
 #	${CC} ${CFLAGS} -o ustringmatrix_test ./ustringmatrix_test.cpp ../ufile/utextfile.cpp ustringmatrix.cpp ustringlist.cpp ustringlistsn.cpp -I../include ${OBJECT} 

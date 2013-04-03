@@ -5,7 +5,6 @@
 #include "ustring.h"
 #include "utextfile.h"
 
-// ㅁ
 namespace ulib {
 
 bool LoadTextFile( char filename[], CUString &file_content );
@@ -19,4 +18,6 @@ double Str2Real( CUString str );
 }
 
 #endif
+
+// EOF ㅁ
 

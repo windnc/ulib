@@ -16,10 +16,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <map>
+#include <string>
 #include "utextfile.h"
 #include "ustringlist.h"
 #include "udir.h"
 
+using namespace std;
 
 namespace ulib {
 
@@ -50,11 +53,14 @@ namespace ulib {
 		bool SetValue( CUString key, CUString value );
 		bool HaveValue(CUString key );
 		bool CheckValue(CUString key );
+		void Print( FILE *fp );
+		void GetKeyList( CUStringList &key );
 
 
 	private:
 		CUString filename;	///< 파일이름
-		CUStringList data;	///< 저장되는 값
+		//CUStringList data;	///< 저장되는 값
+		map<string, string> key_value_map;
 		CUTextFile config_file; ///< 텍스트 파일처리 클래스
 	};
 

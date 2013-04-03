@@ -17,6 +17,7 @@
 //#include "utablefile.h"
 //#include "udocfile.h"
 
+#include "uoption.h"
 #include "udir.h"
 #include "umath.h"
 #include "ucounter.h"
