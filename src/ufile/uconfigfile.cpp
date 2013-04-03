@@ -81,23 +81,21 @@ namespace ulib {
 		while(1)	{
 			CUString line;
 			if( !config_file.ReadLine( line ) )	break;
-	//		line.TrimLeft(" \t\"'");
-	//		line.TrimRight(" \t\"'");
 
 			if( line.IsEmpty() )	continue;
 			if( line.GetAt(0) == '#' )	continue;
 
 			int pos = line.Find( "=" );
-			if( pos < 0 )	continue;
-
+			if( pos < 0 ) {
+				fprintf( stderr, "ERROR: invalud format [%s]\n", line.GetStr() );
+				return false;
+			}
 
 			CUString str_key = line.Left( pos );
-			str_key.TrimRight( " \t" );
-			str_key.TrimRight( "\"'" );
+			str_key.Trim( " \t" );
 
 			CUString str_value = line.Mid( pos+1 );
-	//		str_value.TrimLeft( " \t" );
-	//		str_value.TrimLeft( "'\"" );
+			str_value.Trim(" \t" );
 
 			SetValue( str_key, str_value );
 
@@ -119,21 +117,13 @@ namespace ulib {
 	/////////////////////////////////////////////////////////////
 	bool CUConfigFile::GetValue( CUString key, CUString &ret_value )
 	{
-		// 파일이 열렸는지 검사
 		if( IsLoad() == false )	return false;
 
+		map<string, string>::iterator itr = key_value_map.find( key.GetStr() );
+		if( itr == key_value_map.end() )	return false;
+		ret_value = itr->second.c_str();
 
-		for( size_t i=0; i< data.GetSize(); i++ )	{
-			CUString str;
-			if( !data.GetAt( i, str ) )	return false;
-
-			if( str.Find( key.GetStr() ) == 0 )	{
-				ret_value = str.Mid( key.GetLength() + 1 );
-				return true;
-			}
-		}
-		return false;
-
+		return true;
 	}
 		
 
@@ -151,18 +141,8 @@ namespace ulib {
 	{
 		if( IsLoad() == false )	return false;
 
+		key_value_map[ key.GetStr() ] = value.GetStr();
 
-		for( size_t i=0; i< data.GetSize(); i++ )	{
-			CUString str;
-			if( !data.GetAt( i, str ) )	return false;
-
-			if( str.Find( key.GetStr() ) == 0 )	{
-				return false;
-				
-			}
-		}
-
-		data.PushBack( key + CUString("\t" ) + value );
 		return true;
 	}
 
@@ -177,18 +157,16 @@ namespace ulib {
 	/////////////////////////////////////////////////////////////
 	bool CUConfigFile::HaveValue( CUString key )
 	{
-		// 파일이 열렸는지 검사
 		if( IsLoad() == false )	return false;
 
-		for( size_t i=0; i< data.GetSize(); i++ )	{
-			CUString str;
-			if( !data.GetAt( i, str ) )	return false;
+		map<string, string>::iterator itr = key_value_map.find( key.GetStr() );
+		if( itr == key_value_map.end() )	return false;
 
-			if( str.Find( key.GetStr() ) == 0 )	return true;
-		}
-		return false;
+		return true;
 	}
 
+
+	/////////////////////////////////////////////////////////////
 	bool CUConfigFile::CheckValue( CUString key )
 	{
 		if( HaveValue( key ) ==  true )	return true;
@@ -221,6 +199,18 @@ namespace ulib {
 		else	{
 			return false;
 		}
+	}
+
+
+	void CUConfigFile::Print( FILE *fp )
+	{
+		fprintf( fp, "==================\n" );
+		map<string, string>::iterator itr = key_value_map.begin();
+		while( itr != key_value_map.end() ) {
+			fprintf( fp, "[%s] => [%s]\n", itr->first.c_str(), itr->second.c_str() );
+			itr++;
+		}
+		fprintf( fp, "==================\n" );
 	}
 }
 
