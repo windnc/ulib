@@ -1,7 +1,7 @@
 ulib
 ====
 
-S.W Lee's essential C++ library.  Developed and tested since 2006.
+S.W Lee's essential C++ library.  Developed and tested since 2006. ㅁ
 
 CUString
 ----
