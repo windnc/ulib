@@ -7,6 +7,7 @@ ULIB_INC=-I${ULIB_DIR}include
 ULIB_OBJ=${ULIB_DIR}lib/ulib.a
 
 all:    
+	${CC} ${CFLAGS} app.cpp -o app ${ULIB_OBJ} ${ULIB_INC}
 #	${CC} ${CFLAGS} txtfile.cpp -o txtfile ${ULIB_OBJ} ${ULIB_INC}
 #	${CC} ${CFLAGS} txtfilemem.cpp -o txtfilemem ${ULIB_OBJ} ${ULIB_INC}
 #	${CC} ${CFLAGS} flist.cpp -o flist ${ULIB_OBJ} ${ULIB_INC}
@@ -18,9 +19,8 @@ all:
 
 clean:
 	rm -rf *.o
-	rm -rf txtfile
-	rm -rf txtfilemem
-	rm -rf flist
+	rm -rf app
+	rm -rf txtfile txtfilemem flist
 	rm -rf dirproc 
 	rm -rf confproc 
 
