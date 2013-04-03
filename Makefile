@@ -19,6 +19,8 @@ all:    ${OBJECTS}
 
 ctags:
 	ctags -R
+	mv tags ${PREFIX}/
+	@echo Add 'set tags+=${PREFIX}/tags' in your .vimrc
 
 install:
 	mkdir -p ${PREFIX}
