@@ -49,7 +49,7 @@ namespace ulib {
 		@brief	소멸자
 	*/
 	////////////////////////////////////////////////////////////
-	inline CUListNode::~CUListNode()
+	CUListNode::~CUListNode()
 	{
 		// dealloc
 		if( data )	free(data);
@@ -61,7 +61,7 @@ namespace ulib {
 		@return	data의 시작 주소를 리턴
 	*/
 	////////////////////////////////////////////////////////////
-	inline void *CUListNode::GetData()
+	void *CUListNode::GetData()
 	{
 		if( data == NULL )	return NULL;
 		else				return data;
@@ -74,7 +74,7 @@ namespace ulib {
 		@return	있다면 true
 	*/
 	////////////////////////////////////////////////////////////
-	inline bool CUListNode::HaveNext()
+	bool CUListNode::HaveNext()
 	{
 		if( next == NULL )	return false;
 		else				return true;
@@ -87,7 +87,7 @@ namespace ulib {
 		@return	있다면 true
 	*/
 	////////////////////////////////////////////////////////////
-	inline bool CUListNode::HavePrev()
+	bool CUListNode::HavePrev()
 	{
 		if( prev == NULL )	return false;
 		else				return true;
@@ -158,7 +158,7 @@ namespace ulib {
 		@see	CUList()
 	*/
 	////////////////////////////////////////////////////////////
-	inline void CUList::Verbose( int arg_verbose )
+	void CUList::Verbose( int arg_verbose )
 	{
 		verbose = arg_verbose;
 	}

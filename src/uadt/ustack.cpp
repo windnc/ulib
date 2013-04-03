@@ -101,7 +101,7 @@ namespace ulib {
 				2 : Push, Pop 상황을 출력\n
 	*/
 	////////////////////////////////////////////////////////////
-	inline void CUStack::Verbose( int arg_verbose )
+	void CUStack::Verbose( int arg_verbose )
 	{
 		verbose = arg_verbose;
 	}
@@ -114,7 +114,7 @@ namespace ulib {
 		@see	Pop()
 	*/	
 	////////////////////////////////////////////////////////////
-	inline long CUStack::GetSize()
+	long CUStack::GetSize()
 	{	
 		return size;	
 	}

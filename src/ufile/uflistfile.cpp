@@ -12,27 +12,27 @@
 namespace ulib {
 
 	///////////////////////////////////////////////////////////////
-	inline CUFlistFile::CUFlistFile( CUString arg_filename )
+	CUFlistFile::CUFlistFile( CUString arg_filename )
 	{
 		CUFlistFile( arg_filename.GetStr() );
 	}
 
 
 	///////////////////////////////////////////////////////////////
-	inline CUFlistFile::CUFlistFile( char *arg_filename )
+	CUFlistFile::CUFlistFile( char *arg_filename )
 	{
 		Open( arg_filename );
 	}
 
 
 	///////////////////////////////////////////////////////////////
-	inline CUFlistFile::~CUFlistFile()
+	CUFlistFile::~CUFlistFile()
 	{
 	}
 
 
 	///////////////////////////////////////////////////////////////
-	inline bool CUFlistFile::Open( CUString arg_filename )
+	bool CUFlistFile::Open( CUString arg_filename )
 	{
 		return Open( arg_filename.GetStr() );
 	}
@@ -53,28 +53,28 @@ namespace ulib {
 
 
 	///////////////////////////////////////////////////////////////
-	inline int CUFlistFile::GetNumFile()
+	int CUFlistFile::GetNumFile()
 	{
 		return file_list.GetSize();
 	}
 
 
 	///////////////////////////////////////////////////////////////
-	inline bool CUFlistFile::IsOpen()
+	bool CUFlistFile::IsOpen()
 	{
 		return file.IsOpen();
 	}
 
 
 	///////////////////////////////////////////////////////////////
-	inline bool CUFlistFile::CheckOpen()
+	bool CUFlistFile::CheckOpen()
 	{
 		return file.CheckOpen();
 	}
 
 
 	///////////////////////////////////////////////////////////////
-	inline char *CUFlistFile::GetFilename( int i )
+	char *CUFlistFile::GetFilename( int i )
 	{
 		if( (int)file_list.GetSize() < i )	return NULL;
 		return file_list.GetAt(i);
@@ -82,7 +82,7 @@ namespace ulib {
 
 
 	///////////////////////////////////////////////////////////////
-	inline bool CUFlistFile::CheckList( bool print )
+	bool CUFlistFile::CheckList( bool print )
 	{
 		for( int i=0; i<GetNumFile(); i++ )	{
 

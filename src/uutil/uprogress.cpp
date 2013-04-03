@@ -24,42 +24,42 @@ namespace ulib {
 	}
 
 	///////////////////////////////////////////////////////////////////
-	inline void CUProgress::Begin()
+	void CUProgress::Begin()
 	{
 		begin_clock = clock();
 	}
 
 
 	///////////////////////////////////////////////////////////////////
-	inline void CUProgress::End()
+	void CUProgress::End()
 	{
 		end_clock = clock();
 	}
 
 
 	///////////////////////////////////////////////////////////////////
-	inline double CUProgress::GetElapsedSec()
+	double CUProgress::GetElapsedSec()
 	{
 		return (double)(end_clock-begin_clock)/CLOCKS_PER_SEC;
 	}
 
 
 	///////////////////////////////////////////////////////////////////
-	inline double CUProgress::GetElapsedSec( clock_t now_clock )
+	double CUProgress::GetElapsedSec( clock_t now_clock )
 	{
 		return (double)(now_clock-begin_clock)/CLOCKS_PER_SEC;
 	}
 
 
 	///////////////////////////////////////////////////////////////////
-	inline void CUProgress::SetMaxCount( int i )
+	void CUProgress::SetMaxCount( int i )
 	{
 		max_cnt = i;
 	}
 
 
 	///////////////////////////////////////////////////////////////////
-	inline float CUProgress::GetPercent( int now_cnt )
+	float CUProgress::GetPercent( int now_cnt )
 	{
 		if( max_cnt == 0 )	return 0.0f;
 		return (float)(now_cnt) / (float)max_cnt * 100.0f;

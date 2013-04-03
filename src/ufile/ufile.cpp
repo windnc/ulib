@@ -131,40 +131,40 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////
-	inline FILE *CUFile::GetFP()
+	FILE *CUFile::GetFP()
 	{
 		return fp;
 	}
 
 	//////////////////////////////////////////////////////////////////
-	inline CUString CUFile::GetFileName()
+	CUString CUFile::GetFileName()
 	{
 		return file_name;
 	}
 
 
 	//////////////////////////////////////////////////////////////////
-	inline CUString CUFile::GetFileMode()
+	CUString CUFile::GetFileMode()
 	{
 		return file_mode;
 	}
 
 	//////////////////////////////////////////////////////////////////
-	inline void CUFile::Verbosity( int arg_verbosity )
+	void CUFile::Verbosity( int arg_verbosity )
 	{
 		verbosity = arg_verbosity;
 	}
 
 
 	//////////////////////////////////////////////////////////////////
-	inline long CUFile::GetFileSize()
+	long CUFile::GetFileSize()
 	{
 		return file_size;
 	}
 
 
 	//////////////////////////////////////////////////////////////////
-	inline long CUFile::GetFileSize( CUString filename )
+	long CUFile::GetFileSize( CUString filename )
 	{
 		return GetFileSize( filename.GetStr() );
 	}
@@ -184,7 +184,7 @@ namespace ulib {
 
 
 	//////////////////////////////////////////////////////////////////
-	inline void CUFile::MoveToStart()
+	void CUFile::MoveToStart()
 	{
 		if( IsOpen() )	{
 			fseek( fp, 0, SEEK_SET );
@@ -192,7 +192,7 @@ namespace ulib {
 	}
 
 	//////////////////////////////////////////////////////////////////
-	inline void CUFile::MoveToEnd()
+	void CUFile::MoveToEnd()
 	{
 		if( IsOpen() )	{
 			fseek( fp, 0, SEEK_END );

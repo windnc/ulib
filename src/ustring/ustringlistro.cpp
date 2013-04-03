@@ -18,7 +18,7 @@ namespace ulib
 		@brief	Constructor
 	*/
 	////////////////////////////////////////////////////////////
-	inline CUStringListRO::CUStringListRO()	
+	CUStringListRO::CUStringListRO()	
 	{
 		pos = NULL;
 	}
@@ -43,7 +43,7 @@ namespace ulib
 		@brief	소멸자
 	*/
 	////////////////////////////////////////////////////////////
-	inline CUStringListRO::~CUStringListRO()
+	CUStringListRO::~CUStringListRO()
 	{
 		Clear();
 	} 
@@ -62,7 +62,7 @@ namespace ulib
 	}
 
 	////////////////////////////////////////////////////////////
-	inline size_t CUStringListRO::GetSize()
+	size_t CUStringListRO::GetSize()
 	{
 		return size;
 	}

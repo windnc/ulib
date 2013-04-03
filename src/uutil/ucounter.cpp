@@ -14,20 +14,20 @@
 namespace ulib {
 
 	////////////////////////////////////////////////////////////////////
-	inline CUCounter::CUCounter()
+	CUCounter::CUCounter()
 	{
 		total_count = 0;
 	}
 
 
 	////////////////////////////////////////////////////////////////////
-	inline unsigned long CUCounter::GetNumItem()
+	unsigned long CUCounter::GetNumItem()
 	{
 		return str_cnt_map.size();
 	}
 
 	////////////////////////////////////////////////////////////////////
-	inline unsigned long CUCounter::GetTotalCount()
+	unsigned long CUCounter::GetTotalCount()
 	{
 		return total_count;
 	}

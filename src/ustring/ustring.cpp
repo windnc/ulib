@@ -94,7 +94,7 @@ namespace ulib
 		@see	CUString()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline CUString::~CUString()
+	CUString::~CUString()
 	{
 		if( str )	delete str;
 	}
@@ -107,7 +107,7 @@ namespace ulib
 		@see	SetStr()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline char* CUString::GetStr()
+	char* CUString::GetStr()
 	{
 		return str;
 	}
@@ -135,13 +135,13 @@ namespace ulib
 		@see	GetCharLength()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline int CUString::GetLength()
+	int CUString::GetLength()
 	{
 		return len;
 	}
 
 
-	inline void CUString::Print( FILE *fp )
+	void CUString::Print( FILE *fp )
 	{
 		if( fp == NULL )	return;
 		fprintf( fp, "%s\n", GetStr() );
@@ -181,7 +181,7 @@ namespace ulib
 		@see	GetCharLength()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline char CUString::GetAt( int nIndex )
+	char CUString::GetAt( int nIndex )
 	{
 		if( nIndex < len )	return str[nIndex];
 		else				return '\0';
@@ -315,7 +315,7 @@ namespace ulib
 		@see	GetAt()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline void CUString::SetAt( int nIndex, char ch )
+	void CUString::SetAt( int nIndex, char ch )
 	{
 		if( len < nIndex )	return;
 		str[nIndex] = ch;
@@ -353,7 +353,7 @@ namespace ulib
 		@see	SetStr() GetStr()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline void CUString::SetStr( CUString arg )
+	void CUString::SetStr( CUString arg )
 	{
 		SetStr( arg.GetStr() );
 	}
@@ -404,7 +404,7 @@ namespace ulib
 
 
 	/////////////////////////////////////////////////////////////
-	inline int CUString::DeleteStr( char chStr[], bool caseFree )
+	int CUString::DeleteStr( char chStr[], bool caseFree )
 	{
 		return Replace( chStr, "", caseFree );
 	}
@@ -438,7 +438,7 @@ namespace ulib
 		@see	GetAt()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline char CUString::operator[]( int nIndex )
+	char CUString::operator[]( int nIndex )
 	{
 		return GetAt( nIndex );
 	}
@@ -450,7 +450,7 @@ namespace ulib
 		@param	rhs	뒤에 붙히려는 char[]
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline void CUString::operator+=( char rhs[] )
+	void CUString::operator+=( char rhs[] )
 	{
 		CUString t( rhs );
 		operator+=( t );
@@ -513,7 +513,7 @@ namespace ulib
 		@return	현재 String의 뒤에 rhs를 붙힌 새로운 String 객체를 리턴
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline CUString  CUString::operator+( char rhs[])
+	CUString  CUString::operator+( char rhs[])
 	{
 		CUString t( rhs );
 		return operator+( t );
@@ -602,7 +602,7 @@ namespace ulib
 		@see	IsEmpty()
 	*/	
 	/////////////////////////////////////////////////////////////
-	inline void CUString::Empty()
+	void CUString::Empty()
 	{
 		str[0] = '\0';
 		len = 0;
@@ -659,7 +659,7 @@ namespace ulib
 		@note	SubStr()와 유사
 	*/
 	/////////////////////////////////////////////////////////////
-	inline CUString CUString::Mid( int nFirst )
+	CUString CUString::Mid( int nFirst )
 	{
 		return Mid( nFirst, len-nFirst );
 	}
@@ -747,7 +747,7 @@ namespace ulib
 		@return	찾은 위치\n찾지 못했을 경우 음수값을 리턴
 	*/
 	////////////////////////////////////////////////////////////
-	inline int CUString::Find( CUString &find, int pos )
+	int CUString::Find( CUString &find, int pos )
 	{
 		return this->Find( (char*)find.GetStr(), pos );
 	}
@@ -793,7 +793,7 @@ namespace ulib
 		@return	찾은 위치\n찾지 못했을 경우 음수값을 리턴
 	*/
 	////////////////////////////////////////////////////////////
-	inline int CUString::FindCasefree( CUString &find, int pos )
+	int CUString::FindCasefree( CUString &find, int pos )
 	{
 		return this->FindCasefree( find.GetStr(), pos );
 	}
@@ -1002,7 +1002,7 @@ namespace ulib
 
 
 	////////////////////////////////////////////////////////////
-	inline void CUString:: Remove(CUString &str )
+	void CUString:: Remove(CUString &str )
 	{
 		this->Remove( str.GetStr() );
 	}

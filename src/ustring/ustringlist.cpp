@@ -164,7 +164,7 @@ namespace ulib
 		@brief	소멸자
 	*/
 	////////////////////////////////////////////////////////////
-	inline CUStringList::~CUStringList()
+	CUStringList::~CUStringList()
 	{
 		Clear();
 	} 
