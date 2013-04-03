@@ -87,7 +87,7 @@ namespace ulib {
 
 			int pos = line.Find( "=" );
 			if( pos < 0 ) {
-				fprintf( stderr, "ERROR: invalud format [%s]\n", line.GetStr() );
+				fprintf( stderr, "ERROR: invalid format [%s]\n", line.GetStr() );
 				return false;
 			}
 

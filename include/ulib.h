@@ -14,6 +14,7 @@
 #include "utextfile.h"
 #include "uflistfile.h"
 #include "uconfigfile.h"
+#include "uindexfile.h"
 //#include "utablefile.h"
 //#include "udocfile.h"
 
