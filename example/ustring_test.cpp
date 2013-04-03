@@ -11,6 +11,7 @@ void test_basic()
 	printf( "\n" );
 }
 
+
 void test_substr()
 {
 
@@ -388,5 +389,4 @@ int main()
 }
 
 
-
-
+// EOF ㅁ
