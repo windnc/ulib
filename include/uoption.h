@@ -22,7 +22,7 @@ namespace ulib {
 	class CUOption {
 	public:
 		CUOption();
-		bool Load( int argv, char *argv[] );
+		bool Load( int argc, char *argv[] );
 		void Print( FILE *fp );
 		bool GetValue( CUString &key, CUString &value );
 
