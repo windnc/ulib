@@ -136,16 +136,13 @@ namespace ulib {
 				token->match_idx = match_idx;
 				token_list.GetAt( match_idx ) -> match_idx = i;
 
-				/*
 				if( MatchBrace( i+1, match_idx ) == false ) {
 					return false;
 				}
-				*/
 
 				i = match_idx+1;
 			}
 
-			/*
 			if( token->lexical == "{" ) {
 				int match_idx = FindMatchCurlBraceIdx( start_idx, end_idx, i );
 				if( match_idx < 0 ) {
@@ -160,7 +157,6 @@ namespace ulib {
 
 				i = match_idx+1;
 			}
-			*/
 		}
 
 		return true;
@@ -236,7 +232,7 @@ namespace ulib {
 		for( int i=0; i<CUList::GetSize(); i++ )
 		{
 			CUJsonToken *token = GetAt(i);
-				fprintf( stdout, "[%s]  ", token->lexical.GetStr() );
+				fprintf( stdout, "[%d] %s %d\n", i, token->lexical.GetStr(), token->match_idx );
 		}
 		fprintf( stdout, "\n" );
 
