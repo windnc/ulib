@@ -72,6 +72,7 @@ namespace ulib {
 
 		bool Tokenize();
 		bool MatchBrace( int start_idx, int end_idx );
+		bool Parse();
 
 	public:
 		CUString str;

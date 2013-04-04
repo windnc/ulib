@@ -162,6 +162,12 @@ namespace ulib {
 		return true;
 	}
 
+	////////////////////////////////////////////////////////////////////
+	bool CUJson::Parse()
+	{
+		return true;
+	}
+
 
 	////////////////////////////////////////////////////////////////////
 	bool CUJson::Load( CUString &_str )
@@ -169,17 +175,19 @@ namespace ulib {
 		str = _str;
 		Preproc();
 
-		if( Tokenize() == false )
-		{
+		if( Tokenize() == false ) {
 			return false;
 		}
 
-		if( MatchBrace() == false )
-		{
+		if( MatchBrace() == false ) {
 			return false;
 		}
 
-		token_list.Print();
+		if( Parse() == false ) {
+			return false;
+		}
+
+		//token_list.Print();
 
 		return true;
 	}
