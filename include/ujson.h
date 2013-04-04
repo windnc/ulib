@@ -44,9 +44,12 @@ namespace ulib {
 		CUString lexical;
 		CUString type;
 		int match_idx;
+		bool consumed;
+
 		CUJsonToken()
 		{
 			match_idx=-1;
+			consumed = false;
 		}
 	};
 
@@ -72,7 +75,7 @@ namespace ulib {
 
 		bool Tokenize();
 		bool MatchBrace( int start_idx, int end_idx );
-		bool Parse();
+		bool Parse( int start_idx, int end_idx );
 
 	public:
 		CUString str;

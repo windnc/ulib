@@ -163,8 +163,28 @@ namespace ulib {
 	}
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::Parse()
+	bool CUJson::Parse( int start_idx=-1, int end_idx=-1)
 	{
+		if( start_idx == -1 ) start_idx = 0;
+		if( end_idx == -1 ) end_idx = token_list.GetSize();
+
+		/*
+		for( int i=start_idx; i<end_idx; i++ )
+		{
+			CUJsonToken *token = token_list.GetAt( i );
+			if( token->lexical == "]" ) {
+				if( token->match_idx < start_idx )	return false;
+
+				CUJsonToken *open_token = token_list.GetAt( token->match_idx );
+				token->consumed = true;
+				open_token->consumed = true;
+
+				fprintf( stdout, "arr: (%d~%d)\n",  token->match_idx, i );
+
+			}
+		}
+		*/
+
 		return true;
 	}
 
