@@ -27,11 +27,9 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::Tokenize( CUString &str, CUStringList &token_list )
+	bool CUJson::Tokenize()
 	{
 		token_list.Clear();
-
-		str.Replace( "\\\"", "___QUOT_X__" );
 
 		int pos = 0;
 		while( true )
@@ -48,24 +46,15 @@ namespace ulib {
 				int end = str.Find("\"", pos+1 );
 				if( end < 0 )	return false;
 				token_list.PushBack( str.SubStr( start, end+1 ) );
+
 				pos = end+1;
 			}
-			else if( ch == '{' ) {
-				token_list.PushBack( "{" );
-				pos++;
-			}
-			else if( ch == '}' ) {
-				token_list.PushBack( "}" );
-				pos++;
-			}
-			else if( ch == ',' ) {
-				token_list.PushBack( "," );
-				pos++;
-			}
-			else if( ch == ':' ) {
-				token_list.PushBack( ":" );
-				pos++;
-			}
+			else if( ch == '[' ) { token_list.PushBack( "[" ); pos++; }
+			else if( ch == ']' ) { token_list.PushBack( "]" ); pos++; }
+			else if( ch == '{' ) { token_list.PushBack( "{" ); pos++; }
+			else if( ch == '}' ) { token_list.PushBack( "}" ); pos++; }
+			else if( ch == ',' ) { token_list.PushBack( "," ); pos++; }
+			else if( ch == ':' ) { token_list.PushBack( ":" ); pos++; }
 			else {
 				int start = pos;
 				int end = start+1;
@@ -74,12 +63,8 @@ namespace ulib {
 					if( end >= str.GetLength() )	return false;
 					char ch = str.GetAt(end);
 
-					if( ch == ',' ||  ch == '}' ) {
-						break;
-					}
-					else {
-						end++;
-					}
+					if( ch == ',' ||  ch == '}' || ch == ']' ) { break; }
+					else { end++; }
 				}
 				pos = end;
 
@@ -90,14 +75,37 @@ namespace ulib {
 		return true;
 	}
 
-	int FindMatchBrace( CUStringList &token_list, int start_idx, int end_idx, int pos )
+
+	int CUJson::FindMatchBraceIdx( int start_idx, int end_idx, int pos )
 	{
 		int stack=0;
 		for( int i=pos; i<end_idx; i++ )
 		{
-			CUString token = token_list.GetAt(i);
-			if( token == "{" )	stack++;
-			else if( token == "}" )	{
+			CUJsonToken *token = token_list.GetAt(i);
+			if( token == NULL )	return -1;
+
+			if( token->lexical == "[" )	stack++;
+			else if( token->lexical == "]" )	{
+				stack--;
+				if( stack == 0 )	{
+					return i;
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	int CUJson::FindMatchCurlBraceIdx( int start_idx, int end_idx, int pos )
+	{
+		int stack=0;
+		for( int i=pos; i<end_idx; i++ )
+		{
+			CUJsonToken *token = token_list.GetAt(i);
+			if( token == NULL )	return -1;
+
+			if( token->lexical == "{" )	stack++;
+			else if( token->lexical == "}" )	{
 				stack--;
 				if( stack == 0 )	{
 					return i;
@@ -110,74 +118,81 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::Parse( CUStringList &token_list, CUJsonContainer *container = NULL, int start_idx = -1, int end_idx = -1 )
+	bool CUJson::MatchBrace( int start_idx = -1, int end_idx = -1 )
 	{
 		if( start_idx == -1 )	start_idx = 0;
 		if( end_idx == -1 )	end_idx = token_list.GetSize();
-		if( container == NULL )	container = &(this->container);
-
-//		fprintf( stderr, "%s [%d] ~ [%d]\n", container->name.GetStr(), start_idx, end_idx );
-	//	token_list.PrintEx( stderr, " " );
-	//	fprintf( stderr, "\n" );
 
 		for( int i=start_idx; i<end_idx; i++ )
 		{
-			CUString token = token_list.GetAt(i);
-			if( token == "{" ) {
-				int match_idx = FindMatchBrace( token_list, start_idx, end_idx, i );
+			CUJsonToken *token = token_list.GetAt(i);
+			if( token == NULL )	return false;
+
+			if( token->lexical == "[" ) {
+				int match_idx = FindMatchBraceIdx( start_idx, end_idx, i );
 				if( match_idx < 0 ) {
-					fprintf( stderr, "@@ fail to match %d from %d~%d\n", i, start_idx, end_idx );
 					return false;
 				}
+				token->match_idx = match_idx;
+				token_list.GetAt( match_idx ) -> match_idx = i;
 
-				CUString key = "_main";
-				if( i > 2 )	{
-					key = token_list.GetAt(i-2);
+				/*
+				if( MatchBrace( i+1, match_idx ) == false ) {
+					return false;
 				}
+				*/
 
-				CUJsonContainer *sub_container = new CUJsonContainer();
-				sub_container->name = key;
+				i = match_idx+1;
+			}
 
-				if( Parse( token_list, sub_container, i+1, match_idx ) == false )
-				{
+			/*
+			if( token->lexical == "{" ) {
+				int match_idx = FindMatchCurlBraceIdx( start_idx, end_idx, i );
+				if( match_idx < 0 ) {
+					return false;
+				}
+				token->match_idx = match_idx;
+				token_list.GetAt( match_idx ) -> match_idx = i;
+
+				if( MatchBrace( i+1, match_idx ) == false ) {
 					return false;
 				}
 
 				i = match_idx+1;
 			}
-			else {
-				CUString key = token_list.GetAt(i);
-				i++;
-				i++;
-				CUString value = token_list.GetAt(i);
-				i++;
-
-				fprintf( stderr, "[%s] = [%s]    ", key.GetStr(), value.GetStr() );
-//				fprintf( stderr, "[%s] ", key.GetStr() );
-
-//				CUString value = token_list.GetAt(i+2);
-			}
+			*/
 		}
 
 		return true;
 	}
 
+
 	////////////////////////////////////////////////////////////////////
 	bool CUJson::Load( CUString &_str )
 	{
 		str = _str;
+		Preproc();
 
-		CUStringList token_list;
-		if( Tokenize( str, token_list ) == false )
+		if( Tokenize() == false )
 		{
 			return false;
 		}
-		if( Parse( token_list ) == false )
+
+		if( MatchBrace() == false )
 		{
 			return false;
 		}
+
+		token_list.Print();
 
 		return true;
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	void CUJson::Preproc()
+	{
+		str.Replace( "\\\"", "___QUOT_X__" );
 	}
 
 
@@ -186,6 +201,66 @@ namespace ulib {
 	{
 		return true;
 	}
+
+
+	////////////////////////////////////////////////////////////////////
+	void CUJsonTokenList::Print()
+	{
+		/*
+		for( int i=0; i<CUList::GetSize(); i++ )
+		{
+			CUJsonToken *token = GetAt(i);
+			if( token->lexical == "{" ) {
+				fprintf( stdout, "[%d] =>   %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
+			}
+			else if( token->lexical == "}" )
+			{
+				fprintf( stdout, "[%d] =>   %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
+			}
+			else if( token->lexical == "[" ) {
+				fprintf( stdout, "[%d] => %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
+			}
+			else if( token->lexical == "]" )
+			{
+				fprintf( stdout, "[%d] => %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
+			}
+			else {
+			//	fprintf( stderr, "[%d] %d   ", i, token->match_idx  );
+			}
+
+
+		}
+		fprintf( stderr, "\n" );
+		*/
+
+		for( int i=0; i<CUList::GetSize(); i++ )
+		{
+			CUJsonToken *token = GetAt(i);
+				fprintf( stdout, "[%s]  ", token->lexical.GetStr() );
+		}
+		fprintf( stdout, "\n" );
+
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	void CUJsonTokenList::PushBack( CUString str )
+	{
+		CUJsonToken *token = new CUJsonToken();
+		token->lexical = str;
+		CUList::PushBack( (void *)&token, sizeof( token ) );
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	CUJsonToken * CUJsonTokenList::GetAt( int i )
+	{
+		long addr=0;
+		if( CUList::GetAt( i, (void *)&addr) == false )	return NULL;
+
+		return (CUJsonToken *)addr;
+	}
+
 }
 
 // EOF ㅁ

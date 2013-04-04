@@ -39,7 +39,28 @@ namespace ulib {
 	};
 
 
+	class CUJsonToken {
+	public:
+		CUString lexical;
+		CUString type;
+		int match_idx;
+		CUJsonToken()
+		{
+			match_idx=-1;
+		}
+	};
 
+
+	//////////////////////////////////////////////
+	class CUJsonTokenList : public CUList {
+	public:
+		void PushBack( CUString str );
+		CUJsonToken *GetAt( int i );
+		void Print();
+	};
+
+
+	///////////////////////////////////////////
 	class CUJson: public CUParser  {
 	public:
 		CUJson();
@@ -49,15 +70,18 @@ namespace ulib {
 		virtual bool Load( CUString &str );
 		virtual bool ToString( CUString &ret );
 
-		bool Tokenize( CUString &str, CUStringList &token_list );
-		bool Parse( CUStringList &token_list, CUJsonContainer *container, int start_idx, int end_idx );
-		CUJsonContainer container;
+		bool Tokenize();
+		bool MatchBrace( int start_idx, int end_idx );
 
 	public:
 		CUString str;
+		CUJsonTokenList token_list;
+		CUJsonContainer container;
 		
 	private:
-
+		void Preproc();
+		int FindMatchBraceIdx( int start_idx, int end_idx, int pos ); 
+		int FindMatchCurlBraceIdx( int start_idx, int end_idx, int pos ); 
 
 	private:
 
