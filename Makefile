@@ -7,6 +7,7 @@ OBJECTS += src/uadt/ustack.o src/uadt/ulist.o
 OBJECTS += src/ufile/ufile.o src/ufile/udir.o src/ufile/utextfile.o 
 OBJECTS += src/ufile/uflistfile.o src/ufile/uconfigfile.o src/ufile/uindexfile.o
 OBJECTS += src/uutil/uprogress.o src/uutil/ucounter.o src/uutil/umath.o src/uutil/uoption.o
+OBJECTS += src/uparser/uparser.o src/uparser/ujson.o
 OBJECTS += src/ufunc/ufunc.o 
 
 INC = -Iinclude
@@ -16,6 +17,7 @@ all:    ${OBJECTS}
 #	ar -rscv -o lib/ulib.a ${OBJECTS}
 	ar -r lib/ulib.a ${OBJECTS}
 	ranlib lib/ulib.a
+	cd example; make; cd ..
 
 ctags:
 	ctags -R

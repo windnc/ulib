@@ -24,5 +24,7 @@
 #include "ucounter.h"
 #include "uprogress.h"
 
+#include "ujson.h"
+
 #endif
  
