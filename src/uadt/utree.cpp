@@ -14,28 +14,14 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////
-	CUTreeNode::CUTreeNode( int id )
+	CUTreeNode::CUTreeNode()
 	{
-		this->id = id;
 	}
 
+
 	////////////////////////////////////////////////////////////
-	void CUTreeNode::SetData( void *arg_data, short arg_data_size )	
+	CUTreeNode::~CUTreeNode()
 	{
-		// check
-		if( arg_data_size  <= 0 )	return;
-
-
-		// alloc
-		if( !(data = malloc( arg_data_size ) ) )	return;
-		
-		// set
-		if( !memcpy( data, arg_data, arg_data_size ) )	{
-			free(data);
-			data = NULL; 
-			return;
-		}
-		data_size = arg_data_size;
 	} 
 
 
@@ -57,20 +43,6 @@ namespace ulib {
 		}
 
 	}
-
-	////////////////////////////////////////////////////////////
-	CUTreeNode::~CUTreeNode()
-	{
-		// dealloc
-		if( data )	free(data);
-	} 
-
-	////////////////////////////////////////////////////////////
-	void *CUTreeNode::GetData()
-	{
-		if( data == NULL )	return NULL;
-		else				return data;
-	} 
 
 
 	////////////////////////////////////////////////////////////
@@ -135,7 +107,8 @@ namespace ulib {
 	CUTreeNode* CUTree::AllocateNode()
 	{
 		int node_id = node_list.GetSize();
-		CUTreeNode *node = new CUTreeNode( node_id );
+		CUTreeNode *node = new CUTreeNode();
+		node->id = node_id;
 		node_list.PushBack( (void*)&node, sizeof(node) );
 
 		return node;

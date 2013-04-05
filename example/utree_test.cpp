@@ -24,7 +24,8 @@ void test()
 	fprintf( stderr, "%d [%s]\n", str, str->GetStr() );
 	child->SetData( (void*)&str, sizeof( str ) );
 
-	CUString *tmp = (CUString *)child->GetData();
+	CUString *tmp;
+	child->GetData( (void*)&tmp );
 	fprintf( stderr, "%d [%s]\n", tmp, tmp->GetStr() );
 
 	// bug?
