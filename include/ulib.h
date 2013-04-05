@@ -11,6 +11,7 @@
 //#include "ustringvec.h"
 
 #include "unode.h"
+#include "ustringnode.h"
 #include "ulist.h"
 #include "utree.h"
 

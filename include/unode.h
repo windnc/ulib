@@ -22,9 +22,7 @@ namespace ulib {
 	class CUNode
 	{
 	public:
-		int id;
-		CUNode( int id );
-		CUNode( int id, void *arg_data, short arg_data_size );
+		CUNode();
 		~CUNode();
 
 	public:
@@ -35,8 +33,11 @@ namespace ulib {
 		void Verbose( int arg_verbose );
 
 	public:
+		int id;
 		void *data;
-		short data_size;
+		size_t data_size;
+
+	private:
 		int verbose;
 	};
 

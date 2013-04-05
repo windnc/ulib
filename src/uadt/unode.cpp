@@ -13,19 +13,10 @@
 namespace ulib {
 
 	////////////////////////////////////////////////////////////
-	CUNode::CUNode( int arg_id )
+	CUNode::CUNode()
 	{
-		id = arg_id;
-		data = NULL;	
+		data = NULL;
 		data_size = 0;
-	}
-
-
-	////////////////////////////////////////////////////////////
-	CUNode::CUNode( int arg_id, void *arg_data, short arg_data_size )
-	{
-		id = arg_id;
-		SetData( arg_data, arg_data_size );
 	}
 
 	
