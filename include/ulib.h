@@ -1,7 +1,6 @@
 #ifndef ___ulib___
 #define ___ulib___
 
-// ㅁ
 
 #include "ustring.h"
 //#include "uhtmlstring.h"
@@ -11,6 +10,7 @@
 //#include "ustringmatrix.h"
 //#include "ustringvec.h"
 
+#include "unode.h"
 #include "ulist.h"
 #include "utree.h"
 
@@ -31,3 +31,4 @@
 
 #endif
  
+// EOF ㅁ
