@@ -10,11 +10,30 @@ void test()
 	fprintf( stderr, "num node: %d\n", tree.GetNumNode() );
 
 	CUTreeNode *root = tree.GetRootNode();
-	if( root != NULL )
-	{
-		fprintf( stderr, "ROOT [%d]\n", root->id );
-	}
+	CUTreeNode *child = tree.AddChildNode( root );
+	child = tree.AddChildNode( root );
+	child = tree.AddChildNode( root );
+	child = tree.AddChildNode( root );
+	child = tree.AddChildNode( child );
+	child = tree.AddChildNode( child );
+	child = tree.AddChildNode( child );
+	child = tree.AddChildNode( child );
+	child = tree.AddChildNode( root );
 
+	CUString *str = new CUString( "string test" );
+	fprintf( stderr, "%d [%s]\n", str, str->GetStr() );
+	child->SetData( (void*)&str, sizeof( str ) );
+
+	CUString *tmp = (CUString *)child->GetData();
+	fprintf( stderr, "%d [%s]\n", tmp, tmp->GetStr() );
+
+	// bug?
+
+	child = tree.AddChildNode( child );
+	child = tree.AddChildNode( child );
+	child = tree.AddChildNode( child );
+
+	tree.Print( stderr, root, 0 );
 
 
 }
@@ -29,3 +48,4 @@ int main()
 
 
 // EOF ㅁ
+

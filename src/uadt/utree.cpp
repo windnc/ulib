@@ -20,15 +20,11 @@ namespace ulib {
 	}
 
 	////////////////////////////////////////////////////////////
-	CUTreeNode::CUTreeNode( void *arg_data, short arg_data_size )	
+	void CUTreeNode::SetData( void *arg_data, short arg_data_size )	
 	{
-		// init
-		/*
-		data = next = prev = NULL;	
-		data_size = 0;
-		
 		// check
 		if( arg_data_size  <= 0 )	return;
+
 
 		// alloc
 		if( !(data = malloc( arg_data_size ) ) )	return;
@@ -40,9 +36,27 @@ namespace ulib {
 			return;
 		}
 		data_size = arg_data_size;
-		*/
 	} 
 
+
+	////////////////////////////////////////////////////////////
+	void CUTreeNode::AddChild( CUTreeNode *child )
+	{
+		child_list.PushBack( (void*)&child, sizeof(child) );
+	}
+
+	////////////////////////////////////////////////////////////
+	CUTreeNode *CUTreeNode::GetChild( int idx )
+	{
+		CUTreeNode *node;
+		if( child_list.GetAt( idx, (void*)&node ) == false ) {
+			return NULL;
+		}
+		else {
+			return node;
+		}
+
+	}
 
 	////////////////////////////////////////////////////////////
 	CUTreeNode::~CUTreeNode()
@@ -67,9 +81,9 @@ namespace ulib {
 			printf( "CUTree Create ... \n" ); fflush( stdout );
 		}
 
-		int node_id = node_list.GetSize();
-		CUTreeNode *root_node = new CUTreeNode( node_id );
-		node_list.PushBack( (void*)&root_node, sizeof(root_node) );
+		// root
+		AllocateNode();
+
 
 		if( verbose >= 1)	{
 			printf( "CUTree Create ... [OK]\n" ); fflush( stdout );
@@ -84,12 +98,7 @@ namespace ulib {
 			printf( "CUTree Release ... \n" ); fflush( stdout );
 		}
 
-
 		Clear();
-		/*
-		if(	head )	delete head;
-		if( tail )	delete tail;
-		*/
 
 		if( verbose >= 1)	{
 			printf( "CUTree Release ... [OK]\n" ); fflush( stdout );
@@ -110,6 +119,27 @@ namespace ulib {
 		}
 	}
 
+
+	////////////////////////////////////////////////////////////
+	CUTreeNode * CUTree::AddChildNode( CUTreeNode *parent )
+	{
+		CUTreeNode *node = AllocateNode();
+		node->parent = parent;
+		parent->AddChild( node );
+
+		return node;
+	}
+
+
+	////////////////////////////////////////////////////////////
+	CUTreeNode* CUTree::AllocateNode()
+	{
+		int node_id = node_list.GetSize();
+		CUTreeNode *node = new CUTreeNode( node_id );
+		node_list.PushBack( (void*)&node, sizeof(node) );
+
+		return node;
+	}
 
 
 	////////////////////////////////////////////////////////////
@@ -143,22 +173,26 @@ namespace ulib {
 
 		}
 
-
-		/*
-		CUListNode *tmp_node = head->next;
-		while( tmp_node != tail )	{
-			CUListNode *del_node = tmp_node;
-			tmp_node = tmp_node->next;
-			delete del_node;
-		}
-
-		head->next = tail;
-		tail->prev = head;
-		size = 0;
-		*/
-
 		if( verbose >= 1)	{
 			printf( "CUTree Clear ... [OK]\n" ); fflush( stdout );
+		}
+	}
+
+
+	////////////////////////////////////////////
+	void CUTree::Print( FILE *fp, CUTreeNode *node = NULL, int level = -1 )
+	{
+		if( node == NULL ) node = GetRootNode();
+		if( level == -1 ) level = 0;
+
+		for( int j=0; j<level; j++ ) {
+			fprintf( fp, " " );
+		}
+		fprintf( fp, "%d\n", node->id );
+		for( int i=0; i<node->child_list.GetSize(); i++ )
+		{
+			CUTreeNode *child = node->GetChild( i );
+			Print( fp, child, level+1 );
 		}
 	}
 
