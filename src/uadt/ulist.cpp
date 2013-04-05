@@ -22,26 +22,10 @@ namespace ulib {
 					동적 data의 해제는 나중에 직접 해줘야 함.
 	*/
 	////////////////////////////////////////////////////////////
-	CUListNode::CUListNode( void *arg_data, short arg_data_size )	
+	CUListNode::CUListNode()
 	{
-		// init
-		data = next = prev = NULL;	
-		data_size = 0;
-		
-		// check
-		if( arg_data_size  <= 0 )	return;
-
-		// alloc
-		if( !(data = malloc( arg_data_size ) ) )	return;
-		
-		// set
-		if( !memcpy( data, arg_data, arg_data_size ) )	{
-			free(data);
-			data = NULL; 
-			return;
-		}
-		data_size = arg_data_size;
-	} 
+		next = prev = NULL;	
+	}
 
 
 	////////////////////////////////////////////////////////////
@@ -51,20 +35,6 @@ namespace ulib {
 	////////////////////////////////////////////////////////////
 	CUListNode::~CUListNode()
 	{
-		// dealloc
-		if( data )	free(data);
-	} 
-
-	////////////////////////////////////////////////////////////
-	/**
-		@brief	data를 구함
-		@return	data의 시작 주소를 리턴
-	*/
-	////////////////////////////////////////////////////////////
-	void *CUListNode::GetData()
-	{
-		if( data == NULL )	return NULL;
-		else				return data;
 	} 
 
 
@@ -111,8 +81,12 @@ namespace ulib {
 			printf( "CUList Create ... \n" ); fflush( stdout );
 		}
 
-		head = new CUListNode( (void*)"head", strlen("head")+1 );	
-		tail = new CUListNode( (void*)"tail", strlen("tail")+1 );
+		head = new CUListNode();
+		head->SetData( (void*)"head", strlen("head")+1 );	
+
+		tail = new CUListNode();
+		tail->SetData( (void*)"tail", strlen("tail")+1 );
+
 		head->prev = NULL;
 		head->next = tail;
 		tail->prev = head;
@@ -205,7 +179,9 @@ namespace ulib {
 			printf( "CUList PushFront... \n" ); fflush( stdout );
 		}
 
-		CUListNode *new_node = new CUListNode( push_data, data_size );
+		CUListNode *new_node = new CUListNode();
+		new_node->SetData( push_data, data_size );
+
 		new_node->next = head->next;
 		new_node->prev = head;
 		head->next = new_node;
@@ -246,7 +222,8 @@ namespace ulib {
 			printf( "CUList PushBack... \n" ); fflush( stdout );
 		}
 
-		CUListNode *new_node = new CUListNode( push_data, data_size );
+		CUListNode *new_node = new CUListNode();
+		new_node->SetData( push_data, data_size );
 		CUListNode *last_node = tail->prev;
 		last_node->next = new_node;
 		new_node->prev = last_node;

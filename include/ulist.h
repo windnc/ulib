@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "unode.h"
 
 
 namespace ulib {
@@ -21,28 +22,25 @@ namespace ulib {
 	////////////////////////////////////////////////////////////
 	/**
 		@class		CUListNode
-		@brief		List Node 클래스
-		@date		06.06.02
-		@author		이승욱
-		@warning	???
-		@bug		???
-		@note		???
+		@brief		List Node
+		@date		Jun. 2, 2006 ~
+		@author		swlee
+		@warning	
+		@bug		
+		@note		
 	*/
 	////////////////////////////////////////////////////////////
-	class CUListNode
+	class CUListNode : public CUNode
 	{
 	public:
-		CUListNode( void *arg_data, short arg_data_size );
+		CUListNode();
 		~CUListNode();
 
 	public:
-		void *GetData();
 		bool HaveNext();
 		bool HavePrev();
 
 	public:
-		void *data;			///< 노드에 저장할 데이타
-		short data_size;	///< 노드에 저장할 데이타 크기
 		CUListNode *next;	///< 이전 노드
 		CUListNode *prev;	///< 다음 노드
 	};
