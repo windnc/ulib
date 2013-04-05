@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "utree.h"
+#include "ulist.h"
 
 namespace ulib {
 
@@ -23,6 +23,8 @@ namespace ulib {
 	class CUTreeNode
 	{
 	public:
+		int id;
+		CUTreeNode( int id );
 		CUTreeNode( void *arg_data, short arg_data_size );
 		~CUTreeNode();
 
@@ -45,15 +47,16 @@ namespace ulib {
 		~CUTree();
 
 	public:
-		long GetSize();
+		int GetNumNode();
+		CUTreeNode* GetRootNode();
 		bool IsEmpty();
 
 		void Verbose( int arg_verbose = 0 );
 		void Clear();
 
 	private:
-		long size;
-		CUTreeNode *root;
+
+		CUList node_list;
 		int verbose;
 	};
 

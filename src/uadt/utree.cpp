@@ -14,6 +14,12 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////
+	CUTreeNode::CUTreeNode( int id )
+	{
+		this->id = id;
+	}
+
+	////////////////////////////////////////////////////////////
 	CUTreeNode::CUTreeNode( void *arg_data, short arg_data_size )	
 	{
 		// init
@@ -61,16 +67,9 @@ namespace ulib {
 			printf( "CUTree Create ... \n" ); fflush( stdout );
 		}
 
-		/*
-		head = new CUListNode( (void*)"head", strlen("head")+1 );	
-		tail = new CUListNode( (void*)"tail", strlen("tail")+1 );
-		head->prev = NULL;
-		head->next = tail;
-		tail->prev = head;
-		tail->next = NULL;
-		cur_node = head;
-		size = 0;	
-		*/
+		int node_id = node_list.GetSize();
+		CUTreeNode *root_node = new CUTreeNode( node_id );
+		node_list.PushBack( (void*)&root_node, sizeof(root_node) );
 
 		if( verbose >= 1)	{
 			printf( "CUTree Create ... [OK]\n" ); fflush( stdout );
@@ -84,6 +83,7 @@ namespace ulib {
 		if( verbose >= 1)	{
 			printf( "CUTree Release ... \n" ); fflush( stdout );
 		}
+
 
 		Clear();
 		/*
@@ -99,6 +99,20 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////
+	CUTreeNode * CUTree::GetRootNode()
+	{
+		CUTreeNode *node;
+		if( node_list.GetAt(0, (void*)&node) == false ) {
+			return NULL;
+		}
+		else {
+			return node;
+		}
+	}
+
+
+
+	////////////////////////////////////////////////////////////
 	void CUTree::Verbose( int arg_verbose )
 	{
 		verbose = arg_verbose;
@@ -108,8 +122,7 @@ namespace ulib {
 	////////////////////////////////////////////////////////////
 	bool CUTree::IsEmpty()
 	{
-		if( size <= 0 )	return true;
-		return false;
+		return node_list.GetSize() == 0;
 	}
 
 
@@ -120,6 +133,16 @@ namespace ulib {
 		if( verbose >= 1)	{
 			printf( "CUTree Clear ... \n" ); fflush( stdout );
 		}
+
+		while( node_list.GetSize() > 0 ) {
+			CUTreeNode *node;
+			if( node_list.PopFront( (void*)&node ) )
+			{
+				delete node;
+			}
+
+		}
+
 
 		/*
 		CUListNode *tmp_node = head->next;
@@ -141,9 +164,9 @@ namespace ulib {
 
 
 	////////////////////////////////////////////
-	long CUTree::GetSize()
+	int CUTree::GetNumNode()
 	{
-		return size;
+		return node_list.GetSize();
 	}
 }
 
