@@ -50,9 +50,9 @@ namespace ulib {
 	////////////////////////////////////////////////////////////
 	/**
 		@class		CUList
-		@brief		List 클래스
-		@date		06.06.02
-		@author		이승욱
+		@brief		
+		@date		Jul. 2, 2006 ~
+		@author		swlee
 		@warning	???
 		@bug		???
 		@note		객체의 시작 주소와 크기를 입력하여 노드를 추가한다.\n
