@@ -1,5 +1,6 @@
 lib
 *.o
+*.swp
 
 example/*_test
 
