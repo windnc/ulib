@@ -24,15 +24,20 @@ namespace ulib {
 	public:
 		int id;
 		CUNode( int id );
+		CUNode( int id, void *arg_data, short arg_data_size );
 		~CUNode();
 
 	public:
-		void SetData( void *arg_data, short arg_data_size );
-		void *GetData();
+		bool SetData( void *arg_data, short arg_data_size );
+		bool GetData( void *ret_data );
+		void Clear();
+		bool IsEmpty();
+		void Verbose( int arg_verbose );
 
 	public:
 		void *data;
 		short data_size;
+		int verbose;
 	};
 
 }
