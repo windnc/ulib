@@ -11,6 +11,9 @@
 //#include "ustringmatrix.h"
 //#include "ustringvec.h"
 
+#include "ulist.h"
+#include "utree.h"
+
 #include "utextfile.h"
 #include "uflistfile.h"
 #include "uconfigfile.h"
