@@ -33,7 +33,7 @@ namespace ulib {
 		@note		???
 	*/
 	////////////////////////////////////////////////////////////
-	class CUStringList
+	class CUStringList : public CUList
 	{
 	public:
 		CUStringList();
@@ -47,7 +47,6 @@ namespace ulib {
 		void RemoveFront();
 		void RemoveBack();
 		bool IsEmpty();
-		size_t GetSize();
 		int Find( char str[] );
 		bool PopFront( CUString &ret_str );
 		bool PopBack( CUString &ret_str );
@@ -70,9 +69,6 @@ namespace ulib {
 		
 		void Clear();
 
-
-	public:
-		CUList list;
 	};
 
 }

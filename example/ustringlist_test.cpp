@@ -1,8 +1,6 @@
 #include "ulib.h"
 using namespace ulib;
 
-
-// ㅁ
 void Test1( CUStringList &slist )
 {
 	slist.PushBack ( "hello" );
@@ -11,7 +9,7 @@ void Test1( CUStringList &slist )
 	slist.PushFront( "am" );
 	slist.PushFront ( "I" );
 
-	for( size_t i=0; i<slist.GetSize(); i++ )		{
+	for( size_t i=0; i<(size_t)slist.GetSize(); i++ )		{
 		CUString str;
 		slist.GetAt(i, str );
 		printf( "%s\n", str.GetStr() );
@@ -36,7 +34,7 @@ void Test2()
 	CUStringList list;
 	list.TokenizeByStr( str, "" );
 
-	for( size_t i=0; i<list.GetSize(); i++ )	{
+	for( size_t i=0; i<(size_t)list.GetSize(); i++ )	{
 		CUString node;
 		list.GetAt( i, node );
 		fprintf( stderr, "%s\n", node.GetStr() );
@@ -81,8 +79,8 @@ void Test4()
 int main()
 {
 	CUStringList slist;
-	//Test1( slist );
-	//TestCreater();
+	Test1( slist );
+	TestCreater();
 	Test2();
 	
 	Test3();
@@ -90,3 +88,4 @@ int main()
 	return 0;
 }
 
+// EOF ㅁ

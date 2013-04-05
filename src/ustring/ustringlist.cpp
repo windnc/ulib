@@ -1,12 +1,12 @@
 /**
 	@file		ustringlist.cpp
 	@brief		ustringlist cpp
-	@author		이승욱
-	@date		08.05.06
+	@author		swlee
+	@date		May. 6, 2008 ~
 	@version	0.5
-	@todo		???
-	@warning	???
-	@bug		???
+	@todo		
+	@warning	
+	@bug		
 */
 #include "ustringlist.h"
 
@@ -181,13 +181,6 @@ namespace ulib
 
 
 	////////////////////////////////////////////////////////////
-	size_t CUStringList::GetSize()
-	{
-		return list.GetSize();
-	}
-
-
-	////////////////////////////////////////////////////////////
 	int CUStringList::Find( char str[] )
 	{
 		for( size_t i=0; i<GetSize(); i++ )	{
@@ -201,7 +194,7 @@ namespace ulib
 	void CUStringList::PushFront( const CUString &arg_str )
 	{
 		CUString *str = new CUString( arg_str );
-		list.PushFront( (void*)&str, sizeof(str) );
+		CUList::PushFront( (void*)&str, sizeof(str) );
 	}
 
 
@@ -209,7 +202,7 @@ namespace ulib
 	void CUStringList::PushBack( const CUString &arg_str )
 	{
 		CUString *str = new CUString( arg_str );
-		list.PushBack( (void*)&str, sizeof(str) );
+		CUList::PushBack( (void*)&str, sizeof(str) );
 	}
 
 
@@ -241,7 +234,7 @@ namespace ulib
 	bool CUStringList::PopBack( CUString &ret_str )
 	{
 		long addr;
-		if( !list.PopBack( (void *)&addr ) )	{
+		if( CUList::PopBack( (void *)&addr ) == false )	{
 			return false;
 		}
 
@@ -257,7 +250,7 @@ namespace ulib
 	bool CUStringList::PopFront( CUString &ret_str )
 	{
 		long addr;
-		if( !list.PopFront( (void *)&addr ) )	{
+		if( CUList::PopFront( (void *)&addr ) == false )	{
 			return false;
 		}
 
@@ -273,7 +266,7 @@ namespace ulib
 	bool CUStringList::PopAt( int nPos, CUString &ret_str )
 	{
 		long addr;
-		if( !list.PopAt( nPos, (void*)&addr ) )	{
+		if( CUList::PopAt( nPos, (void*)&addr ) == false )	{
 			return false;
 		}
 
@@ -289,7 +282,7 @@ namespace ulib
 	bool CUStringList::PopAt( int nPos )
 	{
 		long addr;
-		if( !list.PopAt( nPos, (void*)&addr ) )	{
+		if( CUList::PopAt( nPos, (void*)&addr ) == false  )	{
 			return false;
 		}
 
@@ -317,7 +310,7 @@ namespace ulib
 	char *CUStringList::GetAt( int nPos )
 	{
 		long addr;
-		if( !list.GetAt( nPos, (void *)&addr ) )	{
+		if( CUList::GetAt( nPos, (void *)&addr ) == false )	{
 			return NULL;
 		}
 		CUString *find_str = (CUString *)addr;
@@ -330,7 +323,7 @@ namespace ulib
 	bool CUStringList::SetAt( int nPos, CUString &str )
 	{
 		long addr;
-		if( !list.GetAt( nPos, (void *)&addr ) )	{
+		if( CUList::GetAt( nPos, (void *)&addr ) == false )	{
 			return false;
 		}
 		CUString *p = (CUString *)addr;
@@ -352,7 +345,7 @@ namespace ulib
 	bool CUStringList::GetAt( int nPos, CUString &ret_str )
 	{
 		long addr;
-		if( !list.GetAt( nPos, (void *)&addr ) )	{
+		if( CUList::GetAt( nPos, (void *)&addr ) == false )	{
 			return false;
 		}
 
