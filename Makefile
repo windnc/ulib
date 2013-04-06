@@ -24,7 +24,7 @@ ctags:
 	mv tags ${PREFIX}/
 	@echo Add 'set tags+=${PREFIX}/tags' in your .vimrc
 
-doxygen:
+dox:
 	doxygen doxygen/config.doxygen
 
 install:
@@ -43,5 +43,6 @@ clean:
 	rm -rf */*_test
 	rm -rf lib/ulib.a
 	rm -rf lib/ustring.a
+	rm -rf doxygen/out
 
 # ㅁ

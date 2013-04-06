@@ -1,0 +1,23 @@
+/**
+@mainpage	Main Page
+
+
+
+@section Introduction     Introduction
+- The C++ implimentation of essential objects and data structures
+	- CUString, CUStringList, UCStringListRO
+	- CUList, CUStack, CUTree
+	- CUFile, CUTextFile, CUConfigFile
+
+
+
+
+
+
+@section  GENERALINFO	 General Information
+- Developed, tested, and maintained by Seung-Wook Lee (http://github.com/windnc.ulib)
+- Since May, 2006
+
+*/
+
+
