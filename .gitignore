@@ -3,4 +3,5 @@ lib
 *.swp
 
 example/*_test
+doxygen/out
 
