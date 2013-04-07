@@ -153,6 +153,12 @@ namespace ulib {
 
 
 	////////////////////////////////////////////
+	void CUTree::Print( FILE *fp )
+	{
+		return Print( fp, GetRootNode(), 0 );
+	}
+
+	////////////////////////////////////////////
 	void CUTree::Print( FILE *fp, CUTreeNode *node = NULL, int level = -1 )
 	{
 		if( node == NULL ) node = GetRootNode();

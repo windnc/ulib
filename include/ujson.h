@@ -19,49 +19,6 @@
 
 namespace ulib {
 
-	class CUJsonContainer;
-	class CUJsonItem{
-	public:
-
-		CUString key;
-		CUString value;
-		CUJsonContainer *value2;
-
-		CUJsonItem() {
-			value2 = NULL;
-		}
-	};
-	typedef map<string, CUJsonItem> item_map_t;
-	class CUJsonContainer {
-	public:
-		CUString name;
-		item_map_t item_map;
-	};
-
-
-	class CUJsonToken {
-	public:
-		CUString lexical;
-		CUString type;
-		int match_idx;
-		bool consumed;
-
-		CUJsonToken()
-		{
-			match_idx=-1;
-			consumed = false;
-		}
-	};
-
-
-	//////////////////////////////////////////////
-	class CUJsonTokenList : public CUList {
-	public:
-		void PushBack( CUString str );
-		CUJsonToken *GetAt( int i );
-		void Print();
-	};
-
 
 	///////////////////////////////////////////
 	class CUJson: public CUParser  {
@@ -75,12 +32,10 @@ namespace ulib {
 
 		bool Tokenize();
 		bool MatchBrace( int start_idx, int end_idx );
-		bool Parse( int start_idx, int end_idx );
+		bool Parse( int start_idx, int end_idx, CUTreeNode *root );
 
 	public:
 		CUString str;
-		CUJsonTokenList token_list;
-		CUJsonContainer container;
 		
 	private:
 		void Preproc();

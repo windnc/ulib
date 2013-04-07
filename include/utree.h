@@ -55,10 +55,11 @@ namespace ulib {
 
 		void Verbose( int arg_verbose = 0 );
 		void Clear();
-		void Print( FILE *fp, CUTreeNode *node, int level );
+		void Print( FILE *fp );
 
 	private:
 
+		void Print( FILE *fp, CUTreeNode *node, int level );
 		CUTreeNode * AllocateNode();
 		CUList node_list;
 		int verbose;

@@ -14,27 +14,53 @@
 #include <string.h>
 #include <time.h>
 #include "ustring.h"
+#include "utree.h"
 
 
 namespace ulib {
 
+
+	//////////////////////////////////////////////
+	class CUParserToken {
+	public:
+		CUString lexical;
+		CUString type;
+		int match_idx;
+		int level;
+		bool consumed;
+
+		CUParserToken()
+		{
+			match_idx=-1;
+			level=0;
+			consumed = false;
+		}
+	};
+
+
+	//////////////////////////////////////////////
+	class CUParserTokenList : public CUList {
+	public:
+		void PushBack( CUString str );
+		CUParserToken *GetAt( int i );
+		void Print();
+	};
+
+
+	//////////////////////////////////////////////
 	class CUParser {
 	public:
 		CUParser();
 		~CUParser();
 
 	public:
-
 		virtual bool ToString( CUString &ret );
+		virtual bool Tokenize() = 0;
 
 
 	public:
-		
-	private:
-
-
-	private:
-
+		CUParserTokenList token_list;
+		CUTree tree;
 
 	};
 
