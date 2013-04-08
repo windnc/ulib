@@ -1,6 +1,6 @@
 /**
 	@file		unode.h
-	@brief		uonde header
+	@brief		unode header
 	@author		swlee
 	@date		Apr. 5, 2013 ~
 	@version	0.1
