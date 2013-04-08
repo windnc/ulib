@@ -54,9 +54,9 @@ namespace ulib {
 		~CUParser();
 
 	public:
-		virtual bool ToString( CUString &ret );
+		virtual bool ToString( CUString &ret ) = 0;
 		virtual bool Tokenize() = 0;
-
+		virtual CUTreeNode *GetRootNode() = 0;
 
 	public:
 		CUParserTokenList token_list;

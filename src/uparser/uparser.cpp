@@ -35,33 +35,6 @@ namespace ulib {
 	////////////////////////////////////////////////////////////////////
 	void CUParserTokenList::Print()
 	{
-		/*
-		for( int i=0; i<CUList::GetSize(); i++ )
-		{
-			CUJsonToken *token = GetAt(i);
-			if( token->lexical == "{" ) {
-				fprintf( stdout, "[%d] =>   %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
-			}
-			else if( token->lexical == "}" )
-			{
-				fprintf( stdout, "[%d] =>   %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
-			}
-			else if( token->lexical == "[" ) {
-				fprintf( stdout, "[%d] => %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
-			}
-			else if( token->lexical == "]" )
-			{
-				fprintf( stdout, "[%d] => %s %d\n", i,  token->lexical.GetStr(), token->match_idx  );
-			}
-			else {
-			//	fprintf( stderr, "[%d] %d   ", i, token->match_idx  );
-			}
-
-
-		}
-		fprintf( stderr, "\n" );
-		*/
-
 		for( int i=0; i<CUList::GetSize(); i++ )
 		{
 			CUParserToken *token = GetAt(i);
@@ -75,22 +48,19 @@ namespace ulib {
 		fprintf( stdout, "\n" );
 
 	}
+
+
 	////////////////////////////////////////////////////////////////////
 	CUParser::CUParser()
 	{
 	}
+
 
 	////////////////////////////////////////////////////////////////////
 	CUParser::~CUParser()
 	{
 	}
 
-
-	////////////////////////////////////////////////////////////////////
-	bool CUParser::ToString( CUString &ret )
-	{
-		return true;
-	}
 }
 
 // EOF ㅁ

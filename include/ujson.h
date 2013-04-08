@@ -19,23 +19,47 @@
 
 namespace ulib {
 
+	enum  EUJsonValueType {
+		Int,
+		String,
+		Array,
+		Object
+	};
+
+	class CUJsonPair {
+		CUString name;
+		CUString value_str;
+		EUJsonValueType value_type;
+	};
+
+	class CUJsonNode: public CUTreeNode {
+		CUString name;
+	};
+
+	class CUJsonTree: public CUTree {
+	};
+
 
 	///////////////////////////////////////////
-	class CUJson: public CUParser  {
+	class CUJsonParser: public CUParser  {
 	public:
-		CUJson();
-		~CUJson();
+		CUJsonParser();
+		~CUJsonParser();
 	public:
 
 		virtual bool Load( CUString &str );
 		virtual bool ToString( CUString &ret );
 
-		bool Tokenize();
+		virtual bool Tokenize();
 		bool MatchBrace( int start_idx, int end_idx );
 		bool Parse( int start_idx, int end_idx, CUTreeNode *root );
 
+		virtual CUJsonNode *GetRootNode();
+
+
 	public:
 		CUString str;
+		CUJsonTree tree;
 		
 	private:
 		void Preproc();

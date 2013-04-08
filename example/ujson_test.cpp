@@ -13,12 +13,20 @@ void func1()
 	}
 
 
-	CUJson json;
+	CUJsonParser json;
 	if( json.Load( str ) == false )
 	{
 		fprintf( stderr, "fail to load json\n" );
 		return;
 	}
+
+	CUJsonNode *node = json.GetRootNode();
+	if( node != NULL )
+	{
+		fprintf( stderr, "ROOT: %d\n", node->id );
+	}
+
+
 
 	/*
 	CUString str;

@@ -15,18 +15,18 @@
 namespace ulib {
 
 	////////////////////////////////////////////////////////////////////
-	CUJson::CUJson()
+	CUJsonParser::CUJsonParser()
 	{
 	}
 
 	////////////////////////////////////////////////////////////////////
-	CUJson::~CUJson()
+	CUJsonParser::~CUJsonParser()
 	{
 	}
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::Tokenize()
+	bool CUJsonParser::Tokenize()
 	{
 		token_list.Clear();
 
@@ -75,7 +75,7 @@ namespace ulib {
 	}
 
 
-	int CUJson::FindMatchBraceIdx( int start_idx, int end_idx, int pos )
+	int CUJsonParser::FindMatchBraceIdx( int start_idx, int end_idx, int pos )
 	{
 		int stack=0;
 		for( int i=pos; i<=end_idx; i++ )
@@ -95,7 +95,7 @@ namespace ulib {
 		return -1;
 	}
 
-	int CUJson::FindMatchCurlBraceIdx( int start_idx, int end_idx, int pos )
+	int CUJsonParser::FindMatchCurlBraceIdx( int start_idx, int end_idx, int pos )
 	{
 		int stack=0;
 		for( int i=pos; i<=end_idx; i++ )
@@ -117,7 +117,7 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::MatchBrace( int start_idx = -1, int end_idx = -1 )
+	bool CUJsonParser::MatchBrace( int start_idx = -1, int end_idx = -1 )
 	{
 		if( start_idx == -1 )	start_idx = 0;
 		if( end_idx == -1 )	end_idx = token_list.GetSize()-1;
@@ -157,7 +157,7 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::Parse( int start_idx=-1, int end_idx=-1, CUTreeNode *root = NULL )
+	bool CUJsonParser::Parse( int start_idx=-1, int end_idx=-1, CUTreeNode *root = NULL )
 	{
 		if( start_idx == -1 ) start_idx = 0;
 		if( end_idx == -1 ) end_idx = token_list.GetSize()-1;
@@ -179,7 +179,7 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::Load( CUString &_str )
+	bool CUJsonParser::Load( CUString &_str )
 	{
 		str = _str;
 		Preproc();
@@ -204,18 +204,24 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	void CUJson::Preproc()
+	void CUJsonParser::Preproc()
 	{
 		str.Replace( "\\\"", "___QUOT_X__" );
 	}
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJson::ToString( CUString &ret )
+	bool CUJsonParser::ToString( CUString &ret )
 	{
 		return true;
 	}
 
+
+	////////////////////////////////////////////////////////////////////
+	CUJsonNode *CUJsonParser::GetRootNode()
+	{
+		return NULL;
+	}
 
 }
 
