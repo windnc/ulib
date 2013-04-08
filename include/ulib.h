@@ -28,7 +28,8 @@
 #include "ucounter.h"
 #include "uprogress.h"
 
-#include "ujson.h"
+#include "uparser.h"
+#include "ujsonparser.h"
 
 #endif
  

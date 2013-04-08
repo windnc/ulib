@@ -9,8 +9,7 @@
 	@bug		
 	@note		
 */
-#include "ulib.h"
-#include "ujson.h"
+#include "ujsonparser.h"
 
 namespace ulib {
 

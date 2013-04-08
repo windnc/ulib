@@ -7,7 +7,7 @@ OBJECTS += src/uadt/ustack.o src/uadt/ulist.o src/uadt/utree.o src/uadt/unode.o 
 OBJECTS += src/ufile/ufile.o src/ufile/udir.o src/ufile/utextfile.o 
 OBJECTS += src/ufile/uflistfile.o src/ufile/uconfigfile.o src/ufile/uindexfile.o
 OBJECTS += src/uutil/uprogress.o src/uutil/ucounter.o src/uutil/umath.o src/uutil/uoption.o
-OBJECTS += src/uparser/uparser.o src/uparser/ujson.o
+OBJECTS += src/uparser/uparser.o src/uparser/ujsonparser.o
 OBJECTS += src/ufunc/ufunc.o 
 
 INC = -Iinclude
