@@ -19,21 +19,7 @@ void func1()
 		fprintf( stderr, "fail to load json\n" );
 		return;
 	}
-
-	CUJsonNode *node = json.GetRootNode();
-	if( node != NULL )
-	{
-		fprintf( stderr, "ROOT: %d\n", node->id );
-	}
-
-
-
-	/*
-	CUString str;
-	json.ToString( json );
-	fprintf( stderr, "%s\n", json.GetStr() );
-	*/
-
+	json.Print( stdout );
 }
 
 

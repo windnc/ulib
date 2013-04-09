@@ -14,6 +14,14 @@
 namespace ulib {
 
 	////////////////////////////////////////////////////////////////////
+	void CUJsonTree::Print( FILE *fp )
+	{
+		CUTree::Print( fp );
+	}
+
+
+
+	////////////////////////////////////////////////////////////////////
 	CUJsonParser::CUJsonParser()
 	{
 	}
@@ -164,11 +172,15 @@ namespace ulib {
 
 		for( int i=start_idx; i<=end_idx; i++ )
 		{
-			CUParserToken *token1 = token_list.GetAt( i );
+			CUJsonParserToken *token1 = token_list.GetAt( i );
 			if( token1->match_idx != -1 ) {
 				CUTreeNode *child = tree.AddChildNode( root );
 			}
 			else {
+				CUJsonParserToken *token2 = token_list.GetAt(i+1);
+				CUTreeNode *child = tree.AddChildNode( root );
+				child->lexical =  token2->lexical;
+				i++;
 			}
 
 		}
@@ -195,9 +207,6 @@ namespace ulib {
 			return false;
 		}
 
-		tree.Print( stdout );
-//		token_list.Print();
-
 		return true;
 	}
 
@@ -221,6 +230,15 @@ namespace ulib {
 	{
 		return NULL;
 	}
+
+
+	////////////////////////////////////////////////////////////////////
+	void CUJsonParser::Print( FILE *fp )
+	{
+		tree.Print( fp );
+	}
+
+
 
 }
 

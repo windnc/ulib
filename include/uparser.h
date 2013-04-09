@@ -59,6 +59,7 @@ namespace ulib {
 		virtual CUTreeNode *GetRootNode() = 0;
 
 	public:
+		CUString str;
 		CUParserTokenList token_list;
 		CUTree tree;
 

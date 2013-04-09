@@ -35,8 +35,20 @@ namespace ulib {
 	class CUJsonNode: public CUTreeNode {
 		CUString name;
 	};
+	
+	class CUJsonParserToken : public CUParserToken {
+
+	};
+
+
+	class CUJsonParserTokenList: public CUParserTokenList {
+	public:
+		CUJsonParserToken *GetAt( int i );
+	};
 
 	class CUJsonTree: public CUTree {
+	public:
+		virtual void Print( FILE *fp );
 	};
 
 
@@ -55,10 +67,11 @@ namespace ulib {
 		bool Parse( int start_idx, int end_idx, CUTreeNode *root );
 
 		virtual CUJsonNode *GetRootNode();
+		virtual void Print( FILE *fp );
 
 
 	public:
-		CUString str;
+		CUJsonParserTokenList token_list;
 		CUJsonTree tree;
 		
 	private:
