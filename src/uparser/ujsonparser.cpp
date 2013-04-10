@@ -268,6 +268,22 @@ namespace ulib {
 				return false;
 			}
 
+			if( token->lexical == "[" ) {
+				int match_idx = FindMatchBraceIdx( start_idx, end_idx, i );
+				if( match_idx < 0 ) {
+					fprintf( stderr, "match fail %d -> ?\n", i );
+					return false;
+				}
+				token->match_idx = match_idx;
+				token_list.GetAt( match_idx ) -> match_idx = i;
+
+				if( MatchBrace( i+1, match_idx-1 ) == false ) {
+					return false;
+				}
+
+				i = match_idx+1;
+			}
+
 			if( token->lexical == "{" ) {
 				int match_idx = FindMatchCurlBraceIdx( start_idx, end_idx, i );
 				if( match_idx < 0 ) {
@@ -276,8 +292,7 @@ namespace ulib {
 				}
 				token->match_idx = match_idx;
 				token_list.GetAt( match_idx ) -> match_idx = i;
-				for( int j=i+1; j<=match_idx-1; j++ )
-				{
+				for( int j=i+1; j<=match_idx-1; j++ ) {
 					token_list.GetAt(j)->level++;
 				}
 
@@ -299,6 +314,20 @@ namespace ulib {
 		if( start_idx == -1 ) start_idx = 0;
 		if( end_idx == -1 ) end_idx = token_list.GetSize()-1;
 		if( root == NULL ) root = tree.GetRootNode();
+
+			for( int i=start_idx; i<=end_idx; i++ )
+			{
+				CUJsonParserToken *token = token_list.GetAt(i);
+				if( token->lexical == "]" ) {
+					int j=token->match_idx;
+
+					fprintf( stderr, "%d ~ %d [] \n", j, i );
+				}
+
+			}
+
+			return false;
+
 
 		/*
 		for( int i=start_idx; i<=end_idx; i++ )
