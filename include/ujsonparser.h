@@ -43,7 +43,7 @@ namespace ulib {
 
 	class CUJsonParserTokenList: public CUParserTokenList {
 	public:
-		CUJsonParserToken *GetAt( int i );
+	//	CUJsonParserToken *GetAt( int i );
 	};
 
 	class CUJsonTree: public CUTree {

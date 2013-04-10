@@ -1,6 +1,6 @@
 /**
-	@file		ujson.cpp
-	@brief		ujson.cpp
+	@file		ujsonparser.cpp
+	@brief		ujsonparser.cpp
 	@author		swlee
 	@date		Apr. 4, 2013
 	@version	0.0.1
@@ -13,12 +13,12 @@
 
 namespace ulib {
 
+
 	////////////////////////////////////////////////////////////////////
 	void CUJsonTree::Print( FILE *fp )
 	{
 		CUTree::Print( fp );
 	}
-
 
 
 	////////////////////////////////////////////////////////////////////
@@ -30,6 +30,7 @@ namespace ulib {
 	CUJsonParser::~CUJsonParser()
 	{
 	}
+
 
 
 	////////////////////////////////////////////////////////////////////
@@ -170,6 +171,7 @@ namespace ulib {
 		if( end_idx == -1 ) end_idx = token_list.GetSize()-1;
 		if( root == NULL ) root = tree.GetRootNode();
 
+		/*
 		for( int i=start_idx; i<=end_idx; i++ )
 		{
 			CUJsonParserToken *token1 = token_list.GetAt( i );
@@ -179,11 +181,12 @@ namespace ulib {
 			else {
 				CUJsonParserToken *token2 = token_list.GetAt(i+1);
 				CUTreeNode *child = tree.AddChildNode( root );
-				child->lexical =  token2->lexical;
+			//	child->lexical =  token2->lexical;
 				i++;
 			}
 
 		}
+		*/
 
 		return true;
 	}
@@ -235,7 +238,8 @@ namespace ulib {
 	////////////////////////////////////////////////////////////////////
 	void CUJsonParser::Print( FILE *fp )
 	{
-		tree.Print( fp );
+	//	tree.Print( fp );
+		//
 	}
 
 
