@@ -75,7 +75,7 @@ namespace ulib {
 		void Verbose( int arg_verbose = 0 );
 		long PushFront( void* push_data, short data_size );
 		long PushBack( void* push_data, short data_size );
-		long PushFront( char* push_data );
+		virtual long PushFront( char* push_data );
 		long PushBack( char* push_data );
 
 		bool PopFront( void *ret_data);

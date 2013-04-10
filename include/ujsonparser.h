@@ -33,17 +33,23 @@ namespace ulib {
 	};
 
 	class CUJsonNode: public CUTreeNode {
+	public:
 		CUString name;
 	};
 	
 	class CUJsonParserToken : public CUParserToken {
-
+	public:
+		void Print();
 	};
 
 
 	class CUJsonParserTokenList: public CUParserTokenList {
 	public:
-	//	CUJsonParserToken *GetAt( int i );
+		CUJsonParserToken *GetAt( int i );
+		void Print();
+		void AddToken( char *lexical );
+		void AddToken( CUString &lexical );
+		virtual long PushBack( CUString &lexical );
 	};
 
 	class CUJsonTree: public CUTree {
