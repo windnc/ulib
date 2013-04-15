@@ -50,8 +50,8 @@ namespace ulib {
 	public:
 		CUJsonParserToken *GetAt( int i );
 		void Print();
-		void AddToken( char *lexical );
-		void AddToken( CUString &lexical );
+		bool AddToken( char *lexical );
+		bool AddToken( CUString &lexical );
 		virtual long PushBack( CUString &lexical );
 	};
 

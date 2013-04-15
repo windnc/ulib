@@ -150,7 +150,8 @@ namespace ulib {
 
 	long CUJsonParserTokenList::PushBack( CUString &lexical )
 	{
-		lexical.Replace( "___QUOT_X__", "\\\"" );
+		lexical.Replace( "___BACK_X__", "\\" );
+		lexical.Replace( "___QUOT_X__", "\"" );
 		CUJsonParserToken *tok = new CUJsonParserToken();
 		tok->lexical = lexical;
 
@@ -176,7 +177,6 @@ namespace ulib {
 			tok->type = "STRING";
 			tok->lexical.Trim("\"");
 			tok->lexical.Replace("\\/", "/" );
-			tok->lexical.Replace("\\\"", "\"" );
 		}
 		else if( lexical == "true" || lexical == "false" ) {
 			tok->type = "BOOL";
@@ -190,69 +190,30 @@ namespace ulib {
 		else {
 			tok->type = "UNKNOWN";
 			fprintf( stderr, "[ERROR] lexical recognize fail: [%s]\n", lexical.GetStr() );
+			return -1;
 		}
 
 		return CUList::PushBack( (void*)&tok, sizeof(tok) );
 	}
 
-	void CUJsonParserTokenList::AddToken( char *lexical )
+	bool CUJsonParserTokenList::AddToken( char *lexical )
 	{
 		CUString str = lexical;
-		this->PushBack( str );
+		if( this->PushBack( str ) < 0 )	return false;
+		return true;
 	}
 
-	void CUJsonParserTokenList::AddToken( CUString &lexical )
+	bool CUJsonParserTokenList::AddToken( CUString &lexical )
 	{
-		this->PushBack( lexical );
+		if( this->PushBack( lexical ) < 0 )	return false;
+		return true;
 	}
-
 
 
 
 	////////////////////////////////////////////////////////////////////
 	void CUJsonParserTokenList::Print()
 	{
-
-		for( int i=0; i<GetSize(); i++ )
-		{
-			CUJsonParserToken *token = GetAt(i);
-			if( token != NULL )
-			{
-				if( token->type == "STRING" )
-				{
-					CUJsonParserToken *token2 = GetAt(i+1);
-					if( token2 != NULL )
-					{
-						if( token2->type == ":" )
-						{
-
-							CUJsonParserToken *token3 = GetAt(i+2);
-							if( token3 != NULL )
-							{
-								if( token3->type == "STRING" ||
-								    token3->type == "NUM" ||
-								    token3->type == "NULL" ||
-								    token3->type == "BOOL" )
-								{
-									for( int j=0; j<token->level; j++ )
-									{
-										fprintf( stderr, "   " );
-									}
-
-									fprintf( stderr, "[%d] %s -> %s\n", i,
-											token->lexical.GetStr(),
-											token3->lexical.GetStr() );
-									i+=2;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		fprintf( stderr, "\n" );
-		return;
-
 		for( int i=0; i<GetSize(); i++ )
 		{
 			CUJsonParserToken *token = GetAt(i);
@@ -300,15 +261,16 @@ namespace ulib {
 				int end = str.Find("\"", pos+1 );
 				if( end < 0 )	return false;
 				CUString token = str.SubStr( start, end+1 );
-				token_list.AddToken( token );
+				if( token_list.AddToken( token ) == false )	return false;
 				pos = end+1;
 			}
-			else if( ch == '[' ) { token_list.AddToken( "[" ); pos++; }
-			else if( ch == ']' ) { token_list.AddToken( "]" ); pos++; }
-			else if( ch == '{' ) { token_list.AddToken( "{" ); pos++; }
-			else if( ch == '}' ) { token_list.AddToken( "}" ); pos++; }
-			else if( ch == ',' ) { token_list.AddToken( "," ); pos++; }
-			else if( ch == ':' ) { token_list.AddToken( ":" ); pos++; }
+			else if( ch == '[' || ch == ']' || ch == '{' || ch == '}' || ch == ',' || ch == ':' ) { 
+
+				char tmp[12];
+				sprintf( tmp, "%c", ch );
+				if( token_list.AddToken( tmp ) == false )	return false;
+				pos++; 
+			}
 			else {
 				int start = pos;
 				int end = start+1;
@@ -323,7 +285,7 @@ namespace ulib {
 				pos = end;
 
 				CUString token = str.SubStr( start, end );
-				token_list.AddToken( token );
+				if( token_list.AddToken( token ) == false )	return false;
 			}
 		}
 
@@ -516,6 +478,8 @@ namespace ulib {
 		Preproc();
 
 		if( Tokenize() == false ) {
+			
+			token_list.Print();
 			return false;
 		}
 
@@ -534,6 +498,7 @@ namespace ulib {
 	////////////////////////////////////////////////////////////////////
 	void CUJsonParser::Preproc()
 	{
+		str.Replace( "\\\\", "___BACK_X__" );
 		str.Replace( "\\\"", "___QUOT_X__" );
 	}
 
