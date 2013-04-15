@@ -2,11 +2,11 @@
 	@file		ustringlist.h
 	@brief		ustringlist header
 	@author		이승욱
-	@date		08.05.06
+	@date		May 6, 2008
 	@version	0.6
-	@todo		string의 list 구조 구현
-	@warning	???
-	@bug		???
+	@todo		
+	@warning	
+	@bug		
 */
 #ifndef ___ustringlist___
 #define ___ustringlist___
@@ -25,9 +25,9 @@ namespace ulib {
 	////////////////////////////////////////////////////////////
 	/**
 		@class		CUStringList
-		@brief		StringList 클래스
-		@date		08.05.06
-		@author		이승욱
+		@brief		StringList class
+		@date		May 06, 2008
+		@author		swlee
 		@warning	???
 		@bug		???
 		@note		???

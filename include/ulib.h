@@ -6,6 +6,7 @@
 //#include "uhtmlstring.h"
 #include "ustringlist.h"
 #include "ustringlistro.h"
+#include "ustringtree.h"
 //#include "ustringmap.h"
 //#include "ustringmatrix.h"
 //#include "ustringvec.h"
