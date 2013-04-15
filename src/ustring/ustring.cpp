@@ -1203,10 +1203,21 @@ namespace ulib
 	////////////////////////////////////////////////////////////
 	bool CUString::IsNumber()
 	{
-		if( *this == "0" )	return true;
+		// atoi return 0 when string is zero
+		if( *this == "0" || *this == "0.0" )	return true;
 
-		if( atoi( GetStr() ) == 0) 	return false;
-		return true;
+		// in other case, zero means fail
+		if( atoi( GetStr() ) == 0) {
+			if( atof( GetStr() ) == 0.0 )	{
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			return true;
+		}
 	}
 
 
