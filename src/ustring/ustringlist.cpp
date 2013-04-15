@@ -138,7 +138,7 @@ namespace ulib
 	////////////////////////////////////////////////////////////
 	void CUStringList::Print( FILE *fp, char delimeter[] )
 	{
-		for( size_t i=0; i<GetSize(); i++ )	{
+		for( int i=0; i<GetSize(); i++ )	{
 			if( i > 0 )	{
 				fprintf( fp, "%s", delimeter );
 			}
@@ -150,7 +150,7 @@ namespace ulib
 	////////////////////////////////////////////////////////////
 	void CUStringList::PrintEx( FILE *fp, char delimeter[] )
 	{
-		for( size_t i=0; i<GetSize(); i++ )	{
+		for( int i=0; i<GetSize(); i++ )	{
 			if( i > 0 )	{
 				fprintf( fp, "%s", delimeter );
 			}
@@ -183,7 +183,7 @@ namespace ulib
 	////////////////////////////////////////////////////////////
 	int CUStringList::Find( char str[] )
 	{
-		for( size_t i=0; i<GetSize(); i++ )	{
+		for( int i=0; i<GetSize(); i++ )	{
 			if( strcmp( GetAt(i), str ) == 0)	return i;
 		}
 		return -1;
@@ -294,7 +294,7 @@ namespace ulib
 	CUString CUStringList::ToString( char delimeter[] )
 	{
 		CUString ret_str;
-		for( size_t i=0; i<GetSize(); i++ )	{
+		for( int i=0; i<GetSize(); i++ )	{
 			if( i == 0)	{
 				ret_str += GetAt(i);
 			}
@@ -360,7 +360,7 @@ namespace ulib
 	void CUStringList::GetIntersection( CUStringList &list1, CUStringList &list2 )
 	{
 		Clear();
-		for( size_t i=0; i<list1.GetSize(); i++ )	{
+		for( int i=0; i<list1.GetSize(); i++ )	{
 			if( list2.Find( list1.GetAt(i) ) < 0 )	{
 			}
 			else	{
@@ -371,4 +371,5 @@ namespace ulib
 
 }
 
-// EOF
+// EOF ㅁ
+
