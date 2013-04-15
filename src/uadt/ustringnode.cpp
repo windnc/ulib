@@ -47,6 +47,13 @@ namespace ulib {
 		return (char*)data;
 	} 
 
+
+	////////////////////////////////////////////////////////////
+	void CUStringNode::Print( FILE *fp = stdout )
+	{
+		fprintf( fp, "%s\n", GetData() );
+	}
+
 }
 
 // EOF ㅁ

@@ -15,12 +15,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ustring.h"
+#include "ustringnode.h"
 #include "utree.h"
 
 #define DELIMETER_CHARS   " #$%@*\n\t\"'-+=!?,./%<>()[]{}:;|"
 
 
 namespace ulib {
+
+	class CUStringTreeNode : public CUTreeNode {
+	public:
+		CUStringTreeNode();
+
+	public:
+		void AddChild( CUStringTreeNode *child );
+		CUStringTreeNode* GetChild( int idx );
+		void Print( FILE *fp );
+		void SetData( char *str );
+		void SetData( CUString str );
+	};
 
 	////////////////////////////////////////////////////////////
 	/**
@@ -42,6 +55,13 @@ namespace ulib {
 	public:
 		void Clear();
 
+		CUStringTreeNode* GetRootNode();
+		CUStringTreeNode* AddChildNode( CUStringTreeNode* parent );
+		void Print( FILE *fp, CUStringTreeNode *root );
+
+
+	private:
+		CUStringTreeNode* AllocateNode();
 	};
 
 }

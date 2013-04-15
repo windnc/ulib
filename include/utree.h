@@ -30,10 +30,12 @@ namespace ulib {
 	public:
 		void AddChild( CUTreeNode *child );
 		CUTreeNode* GetChild( int idx );
+		int GetNumChild();
 
 	public:
 		CUTreeNode *parent;
 		CUList child_list;
+		int depth;
 	};
 
 
@@ -43,8 +45,9 @@ namespace ulib {
 	{
 	public:
 		// 생성자, 소멸자
-		CUTree( int arg_verbose = 0 );
-		~CUTree();
+		//CUTree( int arg_verbose = 0 );
+		CUTree();
+		virtual ~CUTree();
 
 	public:
 		int GetNumNode();
@@ -57,10 +60,10 @@ namespace ulib {
 		void Clear();
 		void Print( FILE *fp );
 
-	private:
+	//private:
 
 		void Print( FILE *fp, CUTreeNode *node, int level );
-		CUTreeNode * AllocateNode();
+		CUTreeNode* AllocateNode();
 		CUList node_list;
 		int verbose;
 	};

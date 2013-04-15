@@ -22,6 +22,9 @@
 
 namespace ulib {
 
+	class CUStringListNode : public CUListNode {
+	};
+
 	////////////////////////////////////////////////////////////
 	/**
 		@class		CUStringList

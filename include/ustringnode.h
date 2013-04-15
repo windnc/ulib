@@ -24,9 +24,11 @@ namespace ulib {
 		CUStringNode();
 		~CUStringNode();
 
+	public:
 		bool SetData( char *arg_str );
 		bool SetData( CUString &arg_str );
 		char *GetData();
+		void Print( FILE *fp );
 	};
 
 }
