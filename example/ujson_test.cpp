@@ -20,6 +20,25 @@ void func1()
 		return;
 	}
 	json.Print( stdout );
+
+	CUJsonTreeNode *root = json.GetRootNode();
+	if( root == NULL )	{
+		fprintf( stderr, "fail to get root\n" );
+		return;
+	}
+
+	CUJsonTreeNode *text_node = root->Find( "text" );
+	if( text_node == NULL )	{
+		fprintf( stderr, "fail to find text\n" );
+		return;
+	}
+	else {
+		fprintf( stderr, "text: %s\n", text_node->value_str.GetStr() );
+	}
+
+
+
+
 }
 
 

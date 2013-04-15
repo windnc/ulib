@@ -15,9 +15,125 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	void CUJsonTree::Print( FILE *fp )
+	CUJsonTreeNode::CUJsonTreeNode()
 	{
-		CUTree::Print( fp );
+	}
+
+	////////////////////////////////////////////////////////////
+	void CUJsonTreeNode::SetData( char* str )
+	{
+		label = str;
+	}
+
+	////////////////////////////////////////////////////////////
+	void CUJsonTreeNode::AddChild( CUJsonTreeNode *child )
+	{
+		child_list.PushBack( (void*)&child, sizeof(child) );
+	}
+
+
+	////////////////////////////////////////////////////////////
+	CUJsonTreeNode* CUJsonTreeNode::GetChild( int idx )
+	{
+		CUJsonTreeNode *node;
+		if( child_list.GetAt(idx, (void*)&node ) == false ) {
+			return NULL;
+		}
+		else {
+			return node;
+		}
+	}
+
+
+	////////////////////////////////////////////////////////////
+	CUJsonTreeNode* CUJsonTreeNode::Find( char *label )
+	{
+		for( int i=0; i<child_list.GetSize(); i++ )
+		{
+			CUJsonTreeNode *node;
+			if( child_list.GetAt(i, (void*)&node ) == false ) {
+				return NULL;
+			}
+
+			if( node->label == label )	return node;
+
+		}
+
+		return NULL;
+	}
+
+
+	////////////////////////////////////////////////////////////
+	void CUJsonTreeNode::Print( FILE *fp = stderr )
+	{
+		for( int i=0; i<depth; i++ ) {
+			fprintf( fp, "    " );
+		}
+
+		fprintf( fp, "[%s] [%s]=[%s] (%s)\n", label.GetStr(), name.GetStr(), value_str.GetStr(), value_type.GetStr() );
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	void CUJsonTree::Print( FILE *fp = stderr, CUJsonTreeNode *root = NULL )
+	{
+		if( root == NULL )	root = GetRootNode();
+
+		root->Print( fp );
+		for( int i=0; i<root->GetNumChild(); i++ )
+		{
+			Print( fp, root->GetChild(i) );
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////
+	CUJsonTree::CUJsonTree()
+	{
+	}
+
+	////////////////////////////////////////////////////////////////////
+	CUJsonTree::~CUJsonTree()
+	{
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	CUJsonTreeNode* CUJsonTree::GetRootNode()
+	{
+		CUJsonTreeNode *node = NULL;
+		if( node_list.GetSize() == 0 )	{
+			node = AllocateNode();
+			node->label = "ROOT";
+			node->value_str = "";
+			node->value_type = "";
+		}
+		else {
+			node_list.GetAt(0, (void*)&node );
+		}
+		return node;
+	}
+
+	////////////////////////////////////////////////////////////
+	CUJsonTreeNode * CUJsonTree::AddChildNode( CUJsonTreeNode *parent )
+	{
+		CUJsonTreeNode *node = AllocateNode();
+		node->depth = parent->depth+1;
+		node->parent = parent;
+		parent->AddChild( node );
+
+		return node;
+	}
+
+
+	////////////////////////////////////////////////////////////////////
+	CUJsonTreeNode* CUJsonTree::AllocateNode()
+	{
+		int node_id = node_list.GetSize();
+		CUJsonTreeNode *node = new CUJsonTreeNode();
+		node->id = node_id;
+		node_list.PushBack( (void*)&node, sizeof(node) );
+
+		return node;
 	}
 
 
@@ -58,6 +174,9 @@ namespace ulib {
 		}
 		else if( lexical.GetAt(0) == '\"' ) {
 			tok->type = "STRING";
+			tok->lexical.Trim("\"");
+			tok->lexical.Replace("\\/", "/" );
+			tok->lexical.Replace("\\\"", "\"" );
 		}
 		else if( lexical == "true" || lexical == "false" ) {
 			tok->type = "BOOL";
@@ -309,42 +428,82 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	bool CUJsonParser::Parse( int start_idx=-1, int end_idx=-1, CUTreeNode *root = NULL )
+	bool CUJsonParser::Parse( int start_idx=-1, int end_idx=-1, CUJsonTreeNode *root = NULL )
 	{
 		if( start_idx == -1 ) start_idx = 0;
 		if( end_idx == -1 ) end_idx = token_list.GetSize()-1;
 		if( root == NULL ) root = tree.GetRootNode();
+		if( end_idx< 0 )	return false;;
 
-			for( int i=start_idx; i<=end_idx; i++ )
-			{
+
+		for( int i=start_idx; i<=end_idx; i++ ) {
+			CUJsonParserToken *token = token_list.GetAt(i);
+
+
+			if( token->type == ":" ) {
+				CUJsonParserToken *token_prev = token_list.GetAt(i-1);
+				CUJsonParserToken *token_next = token_list.GetAt(i+1);
+				if( token_prev == NULL || token_next == NULL )	return false;
+
+				if( token_next->type == "OBJ_BEGIN" ) {
+					CUJsonTreeNode *node = tree.AddChildNode( root );
+					node->label = token_prev->lexical;
+					node->name = token_prev->lexical;
+					node->value_type = "OBJ";
+					token->consumed = true;
+					token_prev->consumed = true;
+					token_next->consumed = true;
+					CUJsonParserToken *token_match = token_list.GetAt( token_next->match_idx );
+					token_match->consumed = true;
+					if( Parse( i+1, token_next->match_idx, node ) == false )	return false;
+					i=token_next->match_idx+1;
+				}
+				else if( token_next->type == "ARR_BEGIN" ) {
+					CUJsonTreeNode *node = tree.AddChildNode( root );
+					node->label = token_prev->lexical;
+					node->name = token_prev->lexical;
+					node->value_type = "ARR";
+					token->consumed = true;
+					token_prev->consumed = true;
+					token_next->consumed = true;
+					CUJsonParserToken *token_match = token_list.GetAt( token_next->match_idx );
+					token_match->consumed = true;
+					if( Parse( i+1, token_next->match_idx, node ) == false )	return false;
+					i=token_next->match_idx+1;
+				}
+				else {
+					CUJsonTreeNode *node = tree.AddChildNode( root );
+					node->label = token_prev->lexical;
+					node->name = token_prev->lexical;
+					node->value_str = token_next->lexical;
+					node->value_type = token_next->type;
+					token->consumed = true;
+					token_prev->consumed = true;
+					token_next->consumed = true;
+				}
+
+
+			}
+
+
+
+		}
+
+		// only when final
+		if( start_idx == 0 && end_idx == token_list.GetSize()-1 ) {
+			for( int i=1; i<token_list.GetSize()-1; i++ ) { // skip the first and last {, }
 				CUJsonParserToken *token = token_list.GetAt(i);
-				if( token->lexical == "]" ) {
-					int j=token->match_idx;
+				if( token->consumed == false )	{
+					if( token->type == "," ) {
+						continue;
+					}
 
-					fprintf( stderr, "%d ~ %d [] \n", j, i );
+//					fprintf( stderr, "[%s] %d\n", token->lexical.GetStr() ,i );
 				}
 
 			}
 
-			return false;
-
-
-		/*
-		for( int i=start_idx; i<=end_idx; i++ )
-		{
-			CUJsonParserToken *token1 = token_list.GetAt( i );
-			if( token1->match_idx != -1 ) {
-				CUTreeNode *child = tree.AddChildNode( root );
-			}
-			else {
-				CUJsonParserToken *token2 = token_list.GetAt(i+1);
-				CUTreeNode *child = tree.AddChildNode( root );
-			//	child->lexical =  token2->lexical;
-				i++;
-			}
-
 		}
-		*/
 
 		return true;
 	}
@@ -387,17 +546,17 @@ namespace ulib {
 
 
 	////////////////////////////////////////////////////////////////////
-	CUJsonNode *CUJsonParser::GetRootNode()
+	CUJsonTreeNode *CUJsonParser::GetRootNode()
 	{
-		return NULL;
+		return tree.GetRootNode();
 	}
 
 
 	////////////////////////////////////////////////////////////////////
-	void CUJsonParser::Print( FILE *fp )
+	void CUJsonParser::Print( FILE *fp = stderr )
 	{
-	//	tree.Print( fp );
-		token_list.Print();
+		tree.Print( fp, GetRootNode() );
+	//	token_list.Print();
 	}
 
 

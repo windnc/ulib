@@ -32,11 +32,14 @@ namespace ulib {
 		EUJsonValueType value_type;
 	};
 
+	///////////////////////////////////////////
 	class CUJsonNode: public CUTreeNode {
 	public:
 		CUString name;
 	};
-	
+
+
+
 	class CUJsonParserToken : public CUParserToken {
 	public:
 		void Print();
@@ -52,9 +55,40 @@ namespace ulib {
 		virtual long PushBack( CUString &lexical );
 	};
 
+
+	///////////////////////////////////////////
+	class CUJsonTreeNode: public CUTreeNode {
+	public:
+		CUJsonTreeNode();
+
+	public:
+		void AddChild( CUJsonTreeNode *child );
+		CUJsonTreeNode* GetChild( int idx );
+		CUJsonTreeNode* Find( char *label );
+		void Print( FILE *fp );
+		void SetData( char *str );
+
+	public:
+		CUString label;
+		CUString name;
+		CUString value_str;
+		CUString value_type;
+	};
+	
+	///////////////////////////////////////////
 	class CUJsonTree: public CUTree {
 	public:
-		virtual void Print( FILE *fp );
+		CUJsonTree();
+		~CUJsonTree();
+	
+	public:
+		CUJsonTreeNode* GetRootNode();
+		CUJsonTreeNode* AddChildNode( CUJsonTreeNode* parent );
+		void Print( FILE *fp, CUJsonTreeNode *root );
+
+	private:
+		CUJsonTreeNode* AllocateNode();
+
 	};
 
 
@@ -70,9 +104,10 @@ namespace ulib {
 
 		virtual bool Tokenize();
 		bool MatchBrace( int start_idx, int end_idx );
-		bool Parse( int start_idx, int end_idx, CUTreeNode *root );
+		bool Parse( int start_idx, int end_idx, CUJsonTreeNode *root );
 
-		virtual CUJsonNode *GetRootNode();
+		virtual CUJsonTreeNode *GetRootNode();
+		CUJsonTreeNode* AddChildNode( CUJsonTreeNode* parent );
 		virtual void Print( FILE *fp );
 
 
