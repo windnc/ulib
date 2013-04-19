@@ -10,6 +10,7 @@
 //#include "ustringmap.h"
 //#include "ustringmatrix.h"
 //#include "ustringvec.h"
+#include "unistring.h"
 
 #include "unode.h"
 #include "ustringnode.h"
