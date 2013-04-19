@@ -39,8 +39,10 @@ namespace ulib
 	public:
 		int GetNumUniChar();
 		void Print( FILE *fp );
+		char* GetEncStr();
 
 	private:
+		bool Tokenize();
 		bool TokenizeAscii();
 		bool TokenizeAsciiEscapedUnicode();
 		bool TokenizeEuckr();
@@ -49,6 +51,8 @@ namespace ulib
 		bool tokenized;
 		CUString enc;
 		CUStringList unichar_list;
+		int enc_byte;
+		char* enc_str;
 	};
 
 }

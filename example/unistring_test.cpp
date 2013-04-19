@@ -8,10 +8,10 @@ void func1()
 	fprintf( stderr, "Length: %d\n", str.GetLength() );
 	fprintf( stderr, "# Uni Char: %d\n", str.GetNumUniChar() );
 
+
 	CUTextFile file( "unistring_test.euckr", "r" );
 	CUString bufstr;
 	file.LoadToStr( bufstr );
-
 	CUniString str_euckr( bufstr.GetStr(), "EUCKR" );
 	fprintf( stderr, "Length: %d\n", str_euckr.GetLength() );
 	fprintf( stderr, "# Uni Char: %d\n", str_euckr.GetNumUniChar() );
@@ -23,6 +23,7 @@ void func1()
 	fprintf( stderr, "# Uni Char: %d\n", str_aeu.GetNumUniChar() );
 	str_aeu.Print( stdout );
 
+
 	CUTextFile file2( "unistring_test.json", "r" );
 	CUString bufstr2;
 	file2.LoadToStr( bufstr2 );
@@ -30,6 +31,15 @@ void func1()
 	fprintf( stderr, "Length: %d\n", str_json.GetLength() );
 	fprintf( stderr, "# Uni Char: %d\n", str_json.GetNumUniChar() );
 	str_json.Print( stdout );
+
+	CUTextFile file3( "unistring_test.aeu", "r" );
+	CUString bufstr3;
+	file3.LoadToStr( bufstr3 );
+	CUniString str_aeu2( bufstr3.GetStr(), "AEU" );
+	fprintf( stderr, "Length: %d\n", str_aeu2.GetLength() );
+	fprintf( stderr, "# Uni Char: %d\n", str_aeu2.GetNumUniChar() );
+	str_aeu2.Print( stdout );
+	fprintf( stderr, "%s\n", str_aeu2.GetEncStr() );
 }
 
 

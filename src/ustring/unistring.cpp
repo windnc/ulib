@@ -22,6 +22,8 @@ namespace ulib
 	/////////////////////////////////////////////////////////////
 	CUniString::CUniString()
 	{
+		enc_byte = 0;
+		enc_str = NULL;
 		tokenized = false;
 	}
 
@@ -36,6 +38,8 @@ namespace ulib
 	CUniString::CUniString( char* arg_str, char* arg_enc )
 		: CUString( arg_str )
 	{
+		enc_byte = 0;
+		enc_str = NULL;
 		tokenized = false;
 		this->enc = arg_enc;
 		this->enc.MakeToUpper();
@@ -51,31 +55,73 @@ namespace ulib
 	/////////////////////////////////////////////////////////////
 	CUniString::~CUniString()
 	{
+		if( enc_str != NULL )	delete enc_str;
 	}
 
 
 	int CUniString::GetNumUniChar()
 	{
 		if( tokenized == false ) {
-			if( this->enc == "ASCII" ) {
-				if( TokenizeAscii() == false ) {
-					return -1;
-				}
-			}
-			else if( this->enc == "EUCKR" || this->enc == "CP949" ) {
-				if( TokenizeEuckr() == false ) {
-					return -1;
-				}
-			}
-			else if( this->enc == "AEU" || this->enc == "ASCIIESCAPEDUNICODE" ) {
-				if( TokenizeAsciiEscapedUnicode() == false ) {
-					return -1;
-				}
-			}
+			if( Tokenize() == false )	return -1;
 		}
 
 		return unichar_list.GetSize();
 	}
+
+	char* CUniString::GetEncStr()
+	{
+		if( tokenized == false ) {
+			if( Tokenize() == false )	return NULL;
+		}
+
+		if( enc_str == NULL ) {
+			enc_str = new char[ enc_byte + 1 ];
+			//enc_str = new char[ unichar_list.GetSize() * 3 ];
+			enc_str[0] = '\0';
+			for( int i=0; i<unichar_list.GetSize(); i++ ) {
+				strcat( enc_str, unichar_list.GetAt(i) );
+			}
+		}
+
+		/*
+		enc_str = new char[ unichar_list.GetSize() * 3 + 100 ];
+		sprintf( enc_str, "hello: %d", (int)unichar_list.GetSize() );
+		for( int i=0; i<unichar_list.GetSize(); i++ ) {
+			strcat( enc_str, unichar_list.GetAt(i) );
+		}
+		*/
+
+		return enc_str;
+	}
+
+
+	bool CUniString::Tokenize()
+	{
+		if( IsEmpty() == true )	return false;
+
+		if( this->enc == "ASCII" ) {
+			if( TokenizeAscii() == false ) {
+				return false;
+			}
+		}
+		else if( this->enc == "EUCKR" || this->enc == "CP949" ) {
+			if( TokenizeEuckr() == false ) {
+				return false;
+			}
+		}
+		else if( this->enc == "AEU" || this->enc == "ASCIIESCAPEDUNICODE" ) {
+			if( TokenizeAsciiEscapedUnicode() == false ) {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+
+		tokenized = true;
+		return true;
+	}
+
 
 	bool CUniString::TokenizeAscii()
 	{
@@ -84,13 +130,13 @@ namespace ulib
 			if( (int)ch >= 0 ) {
 				char buf[4]; sprintf( buf, "%c", ch );
 				unichar_list.PushBack( buf );
+				enc_byte += 1;
 			}
 			else {
 				return false;
 			}
 		}
 
-		tokenized = true;
 		return true;
 	}
 
@@ -101,17 +147,18 @@ namespace ulib
 			if( (int)ch >= 0 ) {
 				char buf[4]; sprintf( buf, "%c", ch );
 				unichar_list.PushBack( buf );
+				enc_byte += 1;
 			}
 			else {
 				if( i+1 == GetLength() ) return false;
 				char ch2 = GetAt(i+1);
 				char buf[4]; sprintf( buf, "%c%c", ch, ch2 );
 				unichar_list.PushBack( buf );
+				enc_byte += 2;
 				i++;
 			}
 		}
 
-		tokenized = true;
 		return true;
 	}
 
@@ -202,7 +249,6 @@ namespace ulib
 
 	bool CUniString::TokenizeAsciiEscapedUnicode()
 	{
-
 		CUString tmp = GetStr();
 		while( true ) {
 			int idx = tmp.Find( "\\u" );
@@ -212,6 +258,7 @@ namespace ulib
 					if( (int)ch >= 0 ) {
 						char buf[4]; sprintf( buf, "%c", ch );
 						unichar_list.PushBack( buf );
+						enc_byte += 1;
 					}
 					else {
 						return false;
@@ -225,6 +272,7 @@ namespace ulib
 					if( (int)ch >= 0 ) {
 						char buf[4]; sprintf( buf, "%c", ch );
 						unichar_list.PushBack( buf );
+						enc_byte += 1;
 					}
 					else {
 						return false;
@@ -233,11 +281,11 @@ namespace ulib
 				CUString uni = tmp.SubStr( idx, idx+6 );
 				uni = EncodeUTF8( uni );
 				unichar_list.PushBack( uni );
+				enc_byte += uni.GetLength();
 				tmp = tmp.Mid( idx+6 );
 			}
 		}
 
-		tokenized = true;
 		return true;
 	}
 
