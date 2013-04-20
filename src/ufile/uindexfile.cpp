@@ -3,6 +3,14 @@
 namespace ulib {
 
 	///////////////////////////////////////////////////////////////////////////
+	void CUIndexFileInfo::Copy( CUIndexFileInfo &arg )
+	{
+		this->start = arg.start;
+		this->end = arg.end;
+		this->enable = arg.enable;
+	}
+
+	///////////////////////////////////////////////////////////////////////////
 	CUIndexFile::CUIndexFile()
 	{
 	}
@@ -224,6 +232,39 @@ namespace ulib {
 
 		return GetValue( info, ret );
 	}
+
+
+	void CUIndexFile::MoveToFirstRecord()
+	{
+		info_map_itr = info_map.begin();
+	}
+
+	bool CUIndexFile::IsLastRecord()
+	{
+		if( info_map_itr == info_map.end() )	return true;
+		else return false;
+	}
+
+	bool CUIndexFile::MoveToNextRecord()
+	{
+		if( IsLastRecord() == true )	return false;
+		info_map_itr++;
+
+		return true;
+	}
+
+
+	bool CUIndexFile::GetCurrentRecord( CUString &key, CUString &value )
+	{
+		if( IsLastRecord() == true )	return false;
+
+
+		key = info_map_itr->first.c_str();
+		if( GetValue( info_map_itr->second, value ) == false )	return false;
+
+		return true;
+	}
+
 
 }
 
