@@ -7,6 +7,7 @@
 #include "ustringlist.h"
 #include "ustringlistro.h"
 #include "ustringtree.h"
+#include "ustringdic.h"
 //#include "ustringmap.h"
 //#include "ustringmatrix.h"
 //#include "ustringvec.h"
