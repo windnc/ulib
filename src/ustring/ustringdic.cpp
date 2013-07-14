@@ -99,10 +99,9 @@ namespace ulib
 		return true;
 	}
 
-	bool CUStringDic::GetValue( char *str, CUString &result )
+	CUStringDicEntry* CUStringDic::FindEntry( char *str ) 
 	{
 		int idx = 0;
-
 		/*
 		// linear search for debug
 		for( int i=0; i<entry_vec.size(); i++ ) {
@@ -138,7 +137,7 @@ namespace ulib
 			CUStringDicEntry *entry = entry_vec[ idx ];
 			int cmp = strcmp( str, entry->key.GetStr() );
 			if( cmp == 0 )	{
-				return GetValueByAddr( entry->start_addr, entry->end_addr, result );
+				return entry;
 			}
 			
 			if( cmp < 0 )	{
@@ -150,9 +149,25 @@ namespace ulib
 //				fprintf( stderr, "right\n" );
 			}
 		}
-
-		return false;
+		return NULL;
 	}
+
+	bool CUStringDic::GetValue( char *str, CUString &result )
+	{
+		CUStringDicEntry* entry = FindEntry( str );
+		if( entry == NULL )	return false;
+
+		return GetValueByAddr( entry->start_addr, entry->end_addr, result );
+	}
+
+	bool CUStringDic::SetValue( char *str, CUString &value )
+	{
+		CUStringDicEntry* entry = FindEntry( str );
+		if( entry == NULL )	return false;
+
+		return SetValueByAddr( entry->start_addr, entry->end_addr, value);
+	}
+
 
 	bool CUStringDic::GetValueByAddr( long start, long end, CUString &result )
 	{
@@ -171,6 +186,21 @@ namespace ulib
 		fclose( fp );
 		return true;
 
+	}
+
+	bool CUStringDic::SetValueByAddr( long start, long end, CUString &value )
+	{
+		if( value.GetLength() > end-start )	return false;
+		char fn[1024];
+		sprintf( fn ,"%s.sdata", this->prefix.GetStr() );
+		FILE *fp = fopen( fn, "rb+" );
+		if( !fp )	return false;
+//		fprintf( stderr, "OPN %s %ld~%ld\n", value.GetStr(), start, end );
+
+		fseek( fp, start, SEEK_SET );
+		fwrite( value.GetStr(), sizeof(char), value.GetLength(), fp );
+		fclose( fp );
+		return true;
 	}
 
 	////////////////////////////////////////////////////////////

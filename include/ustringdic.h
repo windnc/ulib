@@ -53,14 +53,14 @@ namespace ulib {
 		bool Binarize( char *fn, char *out_prefix );
 		bool LoadBinary( char *prefix );
 		bool GetValue( char *str, CUString &result );
+		bool SetValue( char *str, CUString &value );
+	
+	private:
+		CUStringDicEntry* FindEntry( char *str );
 		bool GetValueByAddr( long start, long end, CUString &result );
+		bool SetValueByAddr( long start, long end, CUString &result );
 
 	private:
-//		CUStringDicNode* node_array;
-//		CUStringDicNode* root;
-		CUStringListRO key_list;
-		CUStringListRO data_list;
-
 		vector<CUStringDicEntry*> entry_vec;
 		CUString prefix;
 	};
