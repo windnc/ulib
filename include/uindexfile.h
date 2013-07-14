@@ -23,6 +23,7 @@ namespace ulib {
 			start = end = 0;
 			enable = true;
 		}
+		void Copy( CUIndexFileInfo &arg );
 	};
 
 
@@ -48,6 +49,12 @@ namespace ulib {
 		bool Create( char *prefix );
 		bool Insert( char *key, char *value );
 		bool Insert( char *key, char *value, int len );
+
+		void MoveToFirstRecord();
+		bool IsLastRecord();
+		bool MoveToNextRecord();
+		bool GetCurrentRecord( CUString &key, CUString &value );
+
 		//bool Delete( char *key );
 
 		map<string, CUIndexFileInfo> info_map;
@@ -55,6 +62,8 @@ namespace ulib {
 	private:
 		CUTextFile key_file;
 		CUTextFile value_file;
+		CUString current_record_key;
+		map<string, CUIndexFileInfo>::iterator info_map_itr;
 
 	};
 

@@ -3,7 +3,7 @@ CFLAGS=-O2 -Wall -Wno-write-strings
 OBJECT=../lib/ulib.a
 
 all: 
-	${CC} ${CFLAGS} -o ustringdic_test ./ustringdic_test.cpp -I../include ${OBJECT} ../src/ustring/ustringdic.cpp
+	${CC} ${CFLAGS} -o unistring_test ./unistring_test.cpp -I../include ${OBJECT}
 	
 
 test:

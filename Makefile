@@ -2,7 +2,8 @@ CC=g++
 CFLAGS=-O2 -Wall -Wno-write-strings
 PREFIX=`echo ~`/.lib/ulib
 
-OBJECTS  = src/ustring/ustring.o src/ustring/ustringlist.o src/ustring/ustringlistro.o src/ustring/ustringtree.o src/ustring/ustringdic.o
+OBJECTS  = src/ustring/ustring.o src/ustring/ustringlist.o src/ustring/ustringlistro.o src/ustring/ustringtree.o
+OBJECTS += src/ustring/unistring.o 
 OBJECTS += src/uadt/ustack.o src/uadt/ulist.o src/uadt/utree.o src/uadt/unode.o src/uadt/ustringnode.o
 OBJECTS += src/ufile/ufile.o src/ufile/udir.o src/ufile/utextfile.o 
 OBJECTS += src/ufile/uflistfile.o src/ufile/uconfigfile.o src/ufile/uindexfile.o
