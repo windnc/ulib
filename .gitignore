@@ -3,5 +3,8 @@ lib
 *.swp
 
 example/*_test
+example/dic.*
+example/*.word
+example/tiny.txt
 doxygen/out
 
