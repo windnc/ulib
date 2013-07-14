@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <algorithm>
 #include <vector>
 #include <list>
 #include <string>
@@ -23,6 +24,13 @@
 
 using namespace std;
 namespace ulib {
+
+	class CUStringDicEntry {
+	public:
+		CUString key;
+		long start_addr;
+		long end_addr;
+	};
 
 	////////////////////////////////////////////////////////////
 	/**
@@ -43,12 +51,18 @@ namespace ulib {
 	public:
 		void Clear();
 		bool Binarize( char *fn, char *out_prefix );
+		bool LoadBinary( char *prefix );
+		bool GetValue( char *str, CUString &result );
+		bool GetValueByAddr( long start, long end, CUString &result );
 
 	private:
 //		CUStringDicNode* node_array;
 //		CUStringDicNode* root;
 		CUStringListRO key_list;
 		CUStringListRO data_list;
+
+		vector<CUStringDicEntry*> entry_vec;
+		CUString prefix;
 	};
 
 }
