@@ -31,7 +31,7 @@ strlist.PopAt( 434, str );
 }
 */
 
-int main()
+void Test1()
 {
 	CUString str( "hello my name is ... -_aa;df-we3_;" );
 	CUString delim(" .-_;");
@@ -52,5 +52,43 @@ int main()
 		if( !slist2.PopFront( tmp) )	break;
 		printf("%s\n", tmp.GetStr() );
 	}
+}
+
+void Test2()
+{
+	CUStringListRO list( "hello world", " " );
+	list.Print( stderr );
+	fprintf( stderr, " %d\n", list.GetSize() );
+
+	CUStringListRO list2 = list;
+	list2.Print( stderr );
+	fprintf( stderr, " %d\n", list2.GetSize() );
+
+	CUStringListRO list3;
+	list3 = list;
+	list.Print( stderr );
+	fprintf( stderr, " %d\n", list3.GetSize() );
+}
+
+void Test3()
+{
+	vector<CUStringListRO> v;
+	for( int i=0; i<10; i++ ) {
+		CUStringListRO list( "hello world", " " );
+		CUStringListRO list2;
+		list2 = list;
+		v.push_back( list );
+		v.push_back( list2 );
+	}
+	fprintf( stderr, "%d\n", (int)v.size() );
+}
+
+
+int main()
+{
+	Test1();
+	Test2();
+	Test3();
+
 	return 0;
 }

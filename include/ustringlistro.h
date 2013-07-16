@@ -35,6 +35,8 @@ namespace ulib {
 	{
 	public:
 		CUStringListRO();
+		CUStringListRO(const CUStringListRO &src );
+		CUStringListRO& operator=(CUStringListRO &rhs );
 		CUStringListRO( const CUString &str, const CUString &delimeter );
 		~CUStringListRO();
 
@@ -42,10 +44,13 @@ namespace ulib {
 		size_t GetSize();
 		char *GetAt( int nPos );
 		void MakeList( const CUString &arg_str, CUString delimeter );
+		void Print( FILE *fp, char delimeter[] = "\n" );
 		void Clear();
 
 	public:
-		CUString str;
+		CUString buf;
+		CUString del;
+		CUString str_org;
 		int *pos;
 		size_t size;
 	};

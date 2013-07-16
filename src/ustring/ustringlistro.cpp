@@ -37,6 +37,19 @@ namespace ulib
 		MakeList( str, delimeter );
 	}
 
+	CUStringListRO::CUStringListRO(const CUStringListRO &src )
+	{
+		CUStringListRO();
+		MakeList( src.str_org, src.del );
+	}
+
+	/////////////////////////////////////////////////////////////
+	CUStringListRO& CUStringListRO::operator=(CUStringListRO &rhs )
+	{
+		this->Clear();
+		this->MakeList( rhs.str_org, rhs.del );
+		return *this;
+	}
 
 	////////////////////////////////////////////////////////////
 	/**
@@ -57,7 +70,7 @@ namespace ulib
 			pos = NULL;
 		}
 		size = 0;
-		str.Empty();
+		buf.Empty();
 
 	}
 
@@ -71,15 +84,17 @@ namespace ulib
 	////////////////////////////////////////////////////////////
 	void CUStringListRO::MakeList( const CUString &arg_str, CUString delimeter )
 	{
-		str = arg_str;
-		pos = new int[str.GetLength()+1];
+		str_org = arg_str;
+		del = delimeter;
+		buf = arg_str;
+		pos = new int[buf.GetLength()+1];
 		size=0;
 		pos[size++] = 0;
 
-		for( int i=0; i<str.GetLength(); i++ )	{
+		for( int i=0; i<buf.GetLength(); i++ )	{
 			for( int j=0; j<delimeter.GetLength(); j++ )	{
-				if( str.GetAt(i) == delimeter.GetAt(j) )	{
-					str.SetAt(i, '\0' );
+				if( buf.GetAt(i) == delimeter.GetAt(j) )	{
+					buf.SetAt(i, '\0' );
 					pos[size++] = i+1;
 					break;
 				}
@@ -95,7 +110,18 @@ namespace ulib
 
 		int idx = pos[nPos];
 		
-		return &( str.GetStr()[idx] );
+		return &( buf.GetStr()[idx] );
+	}
+
+	////////////////////////////////////////////////////////////
+	void CUStringListRO::Print( FILE *fp, char delimeter[] )
+	{
+		for( int i=0; i<(int)GetSize(); i++ )	{
+			if( i > 0 )	{
+				fprintf( fp, "%s", delimeter );
+			}
+			fprintf( fp, "%s", GetAt(i) );
+		}
 	}
 
 }
