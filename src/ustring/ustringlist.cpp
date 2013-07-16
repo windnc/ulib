@@ -18,8 +18,25 @@ namespace ulib
 		@brief	생성자
 	*/
 	////////////////////////////////////////////////////////////
-	CUStringList::CUStringList(  )	
+	CUStringList::CUStringList()	
 	{
+	}
+
+	CUStringList::CUStringList(const CUStringList &src )
+	{
+		for( int i=0; i<src.GetSize(); i++ ) {
+			this->PushBack( src.GetAt(i) );
+		}
+	}
+
+	/////////////////////////////////////////////////////////////
+	CUStringList& CUStringList::operator=(CUStringList &rhs )
+	{
+		this->Clear();
+		for( int i=0; i<rhs.GetSize(); i++ ) {
+			this->PushBack( rhs.GetAt(i) );
+		}
+		return *this;
 	}
 
 
@@ -307,7 +324,7 @@ namespace ulib
 
 
 	////////////////////////////////////////////////////////////
-	char *CUStringList::GetAt( int nPos )
+	char *CUStringList::GetAt( int nPos ) const
 	{
 		long addr;
 		if( CUList::GetAt( nPos, (void *)&addr ) == false )	{
@@ -342,7 +359,7 @@ namespace ulib
 
 
 	////////////////////////////////////////////////////////////
-	bool CUStringList::GetAt( int nPos, CUString &ret_str )
+	bool CUStringList::GetAt( int nPos, CUString &ret_str ) const
 	{
 		long addr;
 		if( CUList::GetAt( nPos, (void *)&addr ) == false )	{

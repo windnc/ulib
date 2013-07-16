@@ -145,7 +145,7 @@ namespace ulib {
 		@see	GetSize(), Clear()
 	*/
 	////////////////////////////////////////////////////////////
-	bool CUList::IsEmpty()
+	bool CUList::IsEmpty() const
 	{
 		if( size <= 0 )	return true;
 		return false;
@@ -335,7 +335,7 @@ namespace ulib {
 		@see	PopAt()
 	*/
 	////////////////////////////////////////////////////////////
-	bool CUList::GetAt( long nPos, void *ret_data )	
+	bool CUList::GetAt( long nPos, void *ret_data )	const
 	{
 		if( IsEmpty() )	return false;
 		if( nPos < 0 )	return false;
@@ -512,7 +512,7 @@ namespace ulib {
 		@return	list의 lode수
 	*/
 	////////////////////////////////////////////
-	long CUList::GetSize()
+	long CUList::GetSize() const
 	{
 		return size;
 	}

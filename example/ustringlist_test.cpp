@@ -74,6 +74,19 @@ void Test4()
 	CUStringList list3;
 	list3.GetIntersection( list1, list2 );
 	list3.Print( stdout );
+	fprintf( stdout, "\n" );
+}
+
+void Test5()
+{
+	fprintf( stderr, "begin of 5\n" );
+	vector<CUStringList> list;
+	for( int i=0; i<10; i++ ) {
+		CUStringList l;
+		list.push_back( l );
+		fprintf( stderr, "%d\n", i );
+	}
+	fprintf( stderr, "end of 5\n" );
 }
 
 int main()
@@ -85,6 +98,7 @@ int main()
 	
 	Test3();
 	Test4();
+	Test5();
 	return 0;
 }
 

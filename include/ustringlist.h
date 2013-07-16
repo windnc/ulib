@@ -42,6 +42,8 @@ namespace ulib {
 		CUStringList();
 		CUStringList( CUString str, CUString delimeter );
 		~CUStringList();
+		CUStringList(const CUStringList &src );
+		CUStringList & operator=(CUStringList &);
 
 	public:
 
@@ -55,8 +57,8 @@ namespace ulib {
 		bool PopBack( CUString &ret_str );
 		bool PopAt( int nPos, CUString &ret_str );
 		bool PopAt( int nPos );
-		bool GetAt( int nPos, CUString &ret_str );
-		char *GetAt( int nPos );
+		bool GetAt( int nPos, CUString &ret_str ) const;
+		char *GetAt( int nPos ) const;
 		bool SetAt( int nPos, CUString &str );
 		bool SetAt( int nPos, char *str );
 

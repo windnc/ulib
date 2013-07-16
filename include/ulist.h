@@ -68,8 +68,8 @@ namespace ulib {
 		~CUList();
 
 	public:
-		long GetSize();
-		bool IsEmpty();
+		long GetSize() const;
+		bool IsEmpty() const;
 
 		// 추가
 		void Verbose( int arg_verbose = 0 );
@@ -81,7 +81,7 @@ namespace ulib {
 		bool PopFront( void *ret_data);
 		bool PopBack( void *ret_data);
 		bool PopAt( long nPos, void *ret_data );
-		bool GetAt( long nPos, void *ret_data );
+		bool GetAt( long nPos, void *ret_data ) const;
 
 		void Clear();
 		bool GetCurNodeData( void *ret_data );
