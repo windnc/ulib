@@ -46,6 +46,7 @@ namespace ulib {
 		void MakeList( const CUString &arg_str, CUString delimeter );
 		void Print( FILE *fp, char delimeter[] = "\n" );
 		void Clear();
+		int Find( CUStringListRO &list, int start=0 );
 
 	public:
 		CUString buf;

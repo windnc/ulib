@@ -84,11 +84,24 @@ void Test3()
 }
 
 
+void Test4()
+{
+	CUString str = "ABC DEF 123 1 2 3";
+	CUStringListRO list( str, " " );
+
+	str = "123 1 3 j dj sje sj e";
+	CUStringListRO list2( str, " " );
+
+	fprintf( stderr, "%d\n", list.Find( list2 ) );
+
+}
+
 int main()
 {
 	Test1();
 	Test2();
 	Test3();
+	Test4();
 
 	return 0;
 }
