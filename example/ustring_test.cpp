@@ -364,6 +364,15 @@ void test_del()
 
 }
 
+void test_release()
+{
+	vector<CUString> vec_str;
+	for( int i=0; i<10; i++ ) {
+		CUString s = "tmp";
+		vec_str.push_back( s );
+	}
+}
+
 int main()
 {
 	test_basic();
@@ -385,6 +394,7 @@ int main()
 	
 	test_del();
 
+	test_release();
 	return 0;
 }
 
