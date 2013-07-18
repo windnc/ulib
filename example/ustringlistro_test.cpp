@@ -58,16 +58,16 @@ void Test2()
 {
 	CUStringListRO list( "hello world", " " );
 	list.Print( stderr );
-	fprintf( stderr, " %d\n", list.GetSize() );
+	fprintf( stderr, " %ld\n", list.GetSize() );
 
 	CUStringListRO list2 = list;
 	list2.Print( stderr );
-	fprintf( stderr, " %d\n", list2.GetSize() );
+	fprintf( stderr, " %ld\n", list2.GetSize() );
 
 	CUStringListRO list3;
 	list3 = list;
 	list.Print( stderr );
-	fprintf( stderr, " %d\n", list3.GetSize() );
+	fprintf( stderr, " %ld\n", list3.GetSize() );
 }
 
 void Test3()

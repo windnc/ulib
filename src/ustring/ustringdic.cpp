@@ -73,7 +73,7 @@ namespace ulib
 
 		CUString line;
 		if( file_skey.ReadLine( line ) == false ) return false;
-		int num_record = atoi( line.GetStr() );
+		//int num_record = atoi( line.GetStr() );
 
 		while( true ) {
 			CUString line;
@@ -94,7 +94,7 @@ namespace ulib
 			}
 		}
 
-		fprintf( stderr, "%d entries loaded\n", entry_vec.size() );
+		//fprintf( stderr, "%ld entries loaded\n", entry_vec.size() );
 		this->prefix = prefix;
 		return true;
 	}
@@ -235,7 +235,7 @@ namespace ulib
 		if( file_sort.IsOpen() == false )	{
 			return false;
 		}
-		for( int i=0; i<entry_vec.size(); i++ ) {
+		for( int i=0; i<(int)entry_vec.size(); i++ ) {
 			fprintf( file_sort.GetFP(), "%s\n", entry_vec[i]->key.GetStr() );
 		}
 
