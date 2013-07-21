@@ -21,6 +21,7 @@ namespace ulib
 	CUStringListRO::CUStringListRO()	
 	{
 		pos = NULL;
+		size = 0;
 	}
 
 
@@ -48,6 +49,15 @@ namespace ulib
 	{
 		this->Clear();
 		this->MakeList( rhs.str_org, rhs.del );
+		return *this;
+	}
+
+	/////////////////////////////////////////////////////////////
+	CUStringListRO& CUStringListRO::operator=(CUStringList &rhs )
+	{
+		this->Clear();
+		CUString tmp = rhs.ToString( "\t" );
+		this->MakeList( tmp, "\t" );
 		return *this;
 	}
 
@@ -125,11 +135,33 @@ namespace ulib
 	}
 
 	////////////////////////////////////////////////////////////
+	int CUStringListRO::Find( CUStringList &list, int start )
+	{
+		if( this->GetSize() < list.GetSize() )	return -1;
+		if( list.GetSize() == 0 )	return -1;
+
+		for( int i=start; i<this->GetSize() - list.GetSize()+1; i++ ) {
+			bool match = true;
+			for( int j=0; j<list.GetSize(); j++ ) {
+				if( strcmp( this->GetAt(i+j), list.GetAt(j) ) != 0 ) {
+					match = false;
+					break;
+				}
+			}
+			if( match == true ) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+	////////////////////////////////////////////////////////////
 	int CUStringListRO::Find( CUStringListRO &list, int start )
 	{
 		if( this->GetSize() < list.GetSize() )	return -1;
+		if( list.GetSize() == 0 )	return -1;
 
-		for( int i=start; i<this->GetSize() - list.GetSize(); i++ ) {
+		for( int i=start; i<this->GetSize() - list.GetSize() + 1; i++ ) {
 			bool match = true;
 			for( int j=0; j<list.GetSize(); j++ ) {
 				if( strcmp( this->GetAt(i+j), list.GetAt(j) ) != 0 ) {

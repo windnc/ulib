@@ -73,7 +73,6 @@ namespace ulib {
 		void PrintEx( FILE *fp, char delimeter[] = "\n" );
 		
 		void Clear();
-
 	};
 
 }

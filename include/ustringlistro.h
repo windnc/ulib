@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ustring.h"
+#include "ustringlist.h"
 #include "ulist.h"
 
 
@@ -36,6 +37,7 @@ namespace ulib {
 	public:
 		CUStringListRO();
 		CUStringListRO(const CUStringListRO &src );
+		CUStringListRO& operator=(CUStringList &rhs );
 		CUStringListRO& operator=(CUStringListRO &rhs );
 		CUStringListRO( const CUString &str, const CUString &delimeter );
 		~CUStringListRO();
@@ -46,6 +48,7 @@ namespace ulib {
 		void MakeList( const CUString &arg_str, CUString delimeter );
 		void Print( FILE *fp, char delimeter[] = "\n" );
 		void Clear();
+		int Find( CUStringList &list, int start=0 );
 		int Find( CUStringListRO &list, int start=0 );
 
 	public:
