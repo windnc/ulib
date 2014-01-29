@@ -85,7 +85,7 @@ namespace ulib
 	}
 
 	////////////////////////////////////////////////////////////
-	size_t CUStringListRO::GetSize()
+	long CUStringListRO::GetSize()
 	{
 		return size;
 	}

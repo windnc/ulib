@@ -38,7 +38,7 @@ void Test1()
 	CUStringListRO slist( str, delim );
 
 	printf( "%d\n", (int)slist.GetSize() );
-	for( size_t i=0; i<slist.GetSize(); i++ )	{
+	for( long i=0; i<slist.GetSize(); i++ )	{
 		char *ptr = slist.GetAt(i );
 		
 		printf( "%s\n", ptr );

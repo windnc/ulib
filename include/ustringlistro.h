@@ -43,7 +43,7 @@ namespace ulib {
 		~CUStringListRO();
 
 	public:
-		size_t GetSize();
+		long GetSize();
 		char *GetAt( int nPos );
 		void MakeList( const CUString &arg_str, CUString delimeter );
 		void Print( FILE *fp, char delimeter[] = "\n" );
